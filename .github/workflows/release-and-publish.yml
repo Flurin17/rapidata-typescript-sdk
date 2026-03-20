@@ -59,7 +59,7 @@ jobs:
         id: bump
         run: |
           if [ "${{ github.event_name }}" = "push" ]; then
-            echo "value=minor" >> "$GITHUB_OUTPUT"
+            echo "value=patch" >> "$GITHUB_OUTPUT"
           else
             echo "value=${{ inputs.version_bump }}" >> "$GITHUB_OUTPUT"
           fi
