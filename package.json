@@ -6,7 +6,11 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/flurinlaim/rapidata-typescript-sdk.git"
+    "url": "git+https://github.com/Flurin17/rapidata-typescript-sdk.git"
+  },
+  "homepage": "https://github.com/Flurin17/rapidata-typescript-sdk#readme",
+  "bugs": {
+    "url": "https://github.com/Flurin17/rapidata-typescript-sdk/issues"
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
