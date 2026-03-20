@@ -1,0 +1,4193 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "Rapidata Audience API",
+    "description": "The API for the Rapidata Audience service",
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "https://api.rabbitdata.ch/"
+    }
+  ],
+  "paths": {
+    "/audience/{audienceId}": {
+      "delete": {
+        "tags": [
+          "Audience"
+        ],
+        "summary": "Deletes the specified audience.",
+        "parameters": [
+          {
+            "name": "audienceId",
+            "in": "path",
+            "description": "The unique identifier of the audience to delete.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Audience"
+        ],
+        "summary": "Gets an audience by its Id.",
+        "parameters": [
+          {
+            "name": "audienceId",
+            "in": "path",
+            "description": "The id of the audience to get.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAudienceByIdResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAudienceByIdResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAudienceByIdResult"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Audience"
+        ],
+        "summary": "Patches an existing audience.",
+        "parameters": [
+          {
+            "name": "audienceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAudienceRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAudienceRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAudienceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/audience/{audienceId}/user-metrics": {
+      "get": {
+        "tags": [
+          "Audience"
+        ],
+        "summary": "Gets the count of users in each state for the specified audience.",
+        "parameters": [
+          {
+            "name": "audienceId",
+            "in": "path",
+            "description": "The unique identifier of the audience.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAudienceUserStateMetricsResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/audience/{audienceId}/pause-distillation": {
+      "post": {
+        "tags": [
+          "Audience"
+        ],
+        "summary": "Pauses the distillation campaign for the specified audience.",
+        "parameters": [
+          {
+            "name": "audienceId",
+            "in": "path",
+            "description": "The unique identifier of the audience.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/audience/{audienceId}/jobs": {
+      "get": {
+        "tags": [
+          "Audience"
+        ],
+        "summary": "Queries jobs for the specified audience.",
+        "parameters": [
+          {
+            "name": "audienceId",
+            "in": "path",
+            "description": "The unique identifier of the audience.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedResultOfQueryJobsResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/audience/{audienceId}/rebuild-distilling-campaign": {
+      "post": {
+        "tags": [
+          "Audience"
+        ],
+        "summary": "Rebuilds the distilling campaign for the specified audience.",
+        "description": "Recalculates campaign filters and selections based on the audience's current settings\n (demographic filters, exit conditions, etc.).",
+        "parameters": [
+          {
+            "name": "audienceId",
+            "in": "path",
+            "description": "The unique identifier of the audience.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/audience/{audienceId}/recreate-external-audiences": {
+      "post": {
+        "tags": [
+          "Audience"
+        ],
+        "summary": "Recreates external audiences for the specified audience.",
+        "parameters": [
+          {
+            "name": "audienceId",
+            "in": "path",
+            "description": "The unique identifier of the audience.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Configuration for which external audiences to recreate.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecreateExternalAudiencesEndpoint_Input"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/audience/{audienceId}/resume-distillation": {
+      "post": {
+        "tags": [
+          "Audience"
+        ],
+        "summary": "Resumes the distillation campaign for the specified audience.",
+        "parameters": [
+          {
+            "name": "audienceId",
+            "in": "path",
+            "description": "The unique identifier of the audience.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/audience/{audienceId}/recruit": {
+      "post": {
+        "tags": [
+          "Audience"
+        ],
+        "summary": "Starts recruiting users for the specified audience.",
+        "parameters": [
+          {
+            "name": "audienceId",
+            "in": "path",
+            "description": "The unique identifier of the audience.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/audience/{audienceId}/boost-config": {
+      "patch": {
+        "tags": [
+          "Audience"
+        ],
+        "summary": "Updates the boost configuration for the specified audience.",
+        "parameters": [
+          {
+            "name": "audienceId",
+            "in": "path",
+            "description": "The unique identifier of the audience.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The boost configuration values to update.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBoostConfigEndpoint_Input"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/audience/{audienceId}/example": {
+      "post": {
+        "tags": [
+          "Examples"
+        ],
+        "summary": "Adds a new example to an audience.",
+        "parameters": [
+          {
+            "name": "audienceId",
+            "in": "path",
+            "description": "The unique identifier of the audience.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The example data to add.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddExampleToAudienceEndpoint_Input"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/audience/example/{exampleId}": {
+      "delete": {
+        "tags": [
+          "Examples"
+        ],
+        "summary": "Deletes the specified audience example.",
+        "parameters": [
+          {
+            "name": "exampleId",
+            "in": "path",
+            "description": "The unique identifier of the example to delete.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/audience/{audienceId}/examples": {
+      "get": {
+        "tags": [
+          "Examples"
+        ],
+        "summary": "Queries all examples for the specified audience.",
+        "parameters": [
+          {
+            "name": "audienceId",
+            "in": "path",
+            "description": "The unique identifier of the audience.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The 1-based page index.",
+            "schema": {
+              "type": "integer"
+            },
+            "x-parameter-group": "page"
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "The number of items per page.",
+            "schema": {
+              "type": "integer"
+            },
+            "x-parameter-group": "page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueryExamplesForAudienceEndpoint_PagedResultOfOutput"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/audience/{audienceId}/example/{exampleId}": {
+      "patch": {
+        "tags": [
+          "Examples"
+        ],
+        "summary": "Updates an example's properties within an audience.",
+        "parameters": [
+          {
+            "name": "audienceId",
+            "in": "path",
+            "description": "The unique identifier of the audience.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "exampleId",
+            "in": "path",
+            "description": "The unique identifier of the example to update.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The example properties to update.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAudienceExampleEndpoint_Input"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/audience/{audienceId}/rapid/{rapidId}": {
+      "patch": {
+        "tags": [
+          "Rapids"
+        ],
+        "summary": "Updates a rapid's validation properties within an audience.",
+        "parameters": [
+          {
+            "name": "audienceId",
+            "in": "path",
+            "description": "The unique identifier of the audience.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "rapidId",
+            "in": "path",
+            "description": "The unique identifier of the rapid to update.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The rapid validation properties to update.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAudienceRapidEndpoint_Input"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/audiences": {
+      "get": {
+        "tags": [
+          "Audience"
+        ],
+        "summary": "Queries all available audiences.",
+        "parameters": [
+          {
+            "name": "request",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueryModel"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedResultOfQueryAudiencesResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedResultOfQueryAudiencesResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedResultOfQueryAudiencesResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/audience": {
+      "post": {
+        "tags": [
+          "Audience"
+        ],
+        "summary": "Creates a new empty audience.",
+        "description": "An audience is a group of users that are trained to solve particular tasks.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAudienceRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAudienceRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAudienceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateAudienceResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateAudienceResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateAudienceResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/audience/{audienceId}/rapid": {
+      "post": {
+        "tags": [
+          "Audience"
+        ],
+        "summary": "Adds a new rapid to be used to train users for the specified audience.",
+        "parameters": [
+          {
+            "name": "audienceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddRapidToAudienceModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddRapidToAudienceModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddRapidToAudienceModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "deprecated": true
+      }
+    },
+    "/audience/{audienceId}/rapids": {
+      "get": {
+        "tags": [
+          "Audience"
+        ],
+        "summary": "Queries all rapids for the specified audience.",
+        "parameters": [
+          {
+            "name": "audienceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "request",
+            "in": "query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueryModel"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedResultOfQueryRapidsOutput"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedResultOfQueryRapidsOutput"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedResultOfQueryRapidsOutput"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": true
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AddExampleToAudienceEndpoint_Input": {
+        "required": [
+          "asset",
+          "payload",
+          "randomCorrectProbability"
+        ],
+        "type": "object",
+        "properties": {
+          "asset": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/IAssetInput"
+              }
+            ],
+            "description": "The asset to use for the example."
+          },
+          "payload": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/IExamplePayload"
+              }
+            ],
+            "description": "The payload to use for the example."
+          },
+          "truth": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/IExampleTruth"
+              }
+            ],
+            "description": "The ground truth for the example."
+          },
+          "randomCorrectProbability": {
+            "type": "number",
+            "description": "The probability for an answer to be correct when randomly guessing.",
+            "format": "double"
+          },
+          "explanation": {
+            "type": "string",
+            "description": "An explanation for the users if they answer the example incorrectly.",
+            "nullable": true
+          },
+          "context": {
+            "type": "string",
+            "description": "An optional textual context that provides additional information to the user.",
+            "nullable": true
+          },
+          "contextAsset": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/IAssetInput"
+              }
+            ],
+            "description": "An optional asset that provides additional context to the user."
+          },
+          "sortIndex": {
+            "type": "integer",
+            "description": "The sort index that controls the serving order of this example within the audience.\n When null, the next sort index is automatically calculated.",
+            "format": "int32"
+          },
+          "featureFlags": {
+            "allOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/FeatureFlagModel"
+                },
+                "nullable": true
+              }
+            ],
+            "description": "The feature flags to enable for the example."
+          },
+          "isCommonSense": {
+            "type": "boolean",
+            "description": "Whether this example should be treated as commonsense validation.\n When true, incorrect answers are not accepted and the example affects global score.\n When null, AI auto-detection will determine if the example is common sense.",
+            "nullable": true
+          }
+        },
+        "description": "Input model for adding an example to an audience."
+      },
+      "AddRapidToAudienceModel": {
+        "required": [
+          "asset",
+          "payload",
+          "randomCorrectProbability"
+        ],
+        "type": "object",
+        "properties": {
+          "asset": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/IAssetInput"
+              }
+            ],
+            "description": "The asset to use for the rapid."
+          },
+          "payload": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/IRapidPayload"
+              }
+            ],
+            "description": "The payload to use for the rapid."
+          },
+          "truth": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/IValidationTruth"
+              }
+            ],
+            "description": "The ground truth for the rapid."
+          },
+          "randomCorrectProbability": {
+            "type": "number",
+            "description": "The probability for an answer to be correct when randomly guessing.",
+            "format": "double"
+          },
+          "explanation": {
+            "type": "string",
+            "description": "An explanation for the users if they answer the rapid incorrectly.",
+            "nullable": true
+          },
+          "context": {
+            "type": "string",
+            "description": "An optional textual context that provides additional information to the user about the rapid.",
+            "nullable": true
+          },
+          "contextAsset": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/IAssetInput"
+              }
+            ],
+            "description": "An optional asset that provides additional context to the user about the rapid."
+          },
+          "featureFlags": {
+            "allOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/FeatureFlagModel"
+                },
+                "nullable": true
+              }
+            ],
+            "description": "The feature flags to enable for the rapid."
+          },
+          "isCommonSense": {
+            "type": "boolean",
+            "description": "Whether this rapid should be treated as commonsense validation.",
+            "nullable": true
+          }
+        },
+        "description": "The model for adding a validation rapid with asset in JSON body."
+      },
+      "AudienceJobState": {
+        "enum": [
+          "Running",
+          "Completed",
+          "Failed"
+        ]
+      },
+      "AudienceStatus": {
+        "enum": [
+          "Created",
+          "Pending",
+          "Recruiting",
+          "Ready"
+        ]
+      },
+      "BoostLevel": {
+        "enum": [
+          "None",
+          "Stable",
+          "Distilling",
+          "Global"
+        ]
+      },
+      "BoxShape": {
+        "type": "object",
+        "properties": {
+          "xMin": {
+            "type": "number",
+            "format": "double"
+          },
+          "yMin": {
+            "type": "number",
+            "format": "double"
+          },
+          "xMax": {
+            "type": "number",
+            "format": "double"
+          },
+          "yMax": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "ClassifyPayload_Category": {
+        "required": [
+          "label",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateAudienceRequest": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name to give the newly created audience."
+          },
+          "description": {
+            "type": "string",
+            "description": "An optional markdown-supported description of the audience's purpose.",
+            "nullable": true
+          },
+          "filters": {
+            "allOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/IAudienceFilter"
+                },
+                "nullable": true
+              }
+            ],
+            "description": "The filters to apply to any orders created for this audience.\n A filter can be used to restrict the audience to a specific subset of users."
+          },
+          "graduationScore": {
+            "type": "number",
+            "description": "The score used to determine whether a user graduates from the distilling campaign.",
+            "format": "double"
+          },
+          "demotionScore": {
+            "type": "number",
+            "description": "Score below which a graduated user is demoted back to distilling.\n Must be less than or equal to GraduationScore. Defaults to null (uses GraduationScore).",
+            "format": "double"
+          },
+          "minimumSizeForActivation": {
+            "type": "integer",
+            "description": "The minimum number of users required for an audience to be activated.",
+            "format": "int64"
+          },
+          "logo": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ExistingAssetInput"
+              }
+            ],
+            "description": "An optional logo image for the audience. Must be an existing image asset."
+          },
+          "maxDistillingResponses": {
+            "type": "integer",
+            "description": "Maximum responses before user exits the distilling campaign.\n Defaults to 10. Set to null to disable this exit condition.",
+            "format": "uint32"
+          },
+          "dropMinResponses": {
+            "type": "integer",
+            "description": "Minimum responses before the drop score check applies.\n Users need at least this many responses before they can be kicked out for low score.\n Defaults to 3. Set to null to apply drop score check from the first response.",
+            "format": "uint32"
+          },
+          "dropScore": {
+            "type": "number",
+            "description": "Score floor - users below this score exit the distilling campaign\n (only after completing DropMinResponses).\n Defaults to 0.2. Set to null to disable this exit condition.",
+            "format": "double"
+          },
+          "minimumUserScore": {
+            "type": "number",
+            "description": "Use instead.",
+            "format": "double"
+          },
+          "minDistillingScoreFloor": {
+            "type": "number",
+            "description": "Use instead.",
+            "format": "double"
+          },
+          "minDistillingResponses": {
+            "type": "integer",
+            "description": "Use instead.",
+            "format": "uint32"
+          },
+          "isDistillingCampaignSticky": {
+            "type": "boolean",
+            "description": "Whether the distilling campaign should be sticky (users stay until filters don't match).\n Defaults to true (Temporary sticky)."
+          },
+          "maxDistillingSessions": {
+            "type": "integer",
+            "description": "Maximum sessions (rapid retrievals) before user exits the distilling campaign.\n Defaults to null (disabled). Set to a value to enable session-based exit condition.",
+            "format": "uint32"
+          },
+          "inactivityDropDays": {
+            "type": "integer",
+            "description": "Number of days of inactivity before a distilling user is dropped.\n Defaults to null (disabled).",
+            "format": "uint32"
+          },
+          "minSubmissionRate": {
+            "type": "number",
+            "description": "Minimum submission rate (responses / sessions) before a user is dropped.\n Defaults to null (disabled).",
+            "format": "double"
+          },
+          "minSessionsForSubmissionRate": {
+            "type": "integer",
+            "description": "Minimum number of sessions before the submission rate check applies.\n Defaults to null (applies from first session).",
+            "format": "uint32"
+          },
+          "minSubmissionRateGraduated": {
+            "type": "number",
+            "description": "Minimum submission rate for graduated users. If null, MinSubmissionRate applies to graduated users.\n Set a lower value to be more lenient with graduated users.",
+            "format": "double"
+          },
+          "distillingRetrievalMode": {
+            "$ref": "#/components/schemas/DistillingRetrievalMode"
+          },
+          "minDistillingForGlobalBoost": {
+            "type": "integer",
+            "description": "Minimum distilling users before disabling global boost.\n Defaults to 200. Admin-only override.",
+            "format": "int32"
+          },
+          "minGraduatedForDistillingBoost": {
+            "type": "integer",
+            "description": "Minimum graduated users before disabling distilling boost.\n Defaults to 100. Admin-only override.",
+            "format": "int32"
+          }
+        },
+        "description": "The body request to create an audience."
+      },
+      "CreateAudienceResult": {
+        "required": [
+          "audienceId"
+        ],
+        "type": "object",
+        "properties": {
+          "audienceId": {
+            "type": "string"
+          }
+        }
+      },
+      "DistillingRetrievalMode": {
+        "enum": [
+          "Random",
+          "Shuffled",
+          "Sequential"
+        ]
+      },
+      "ExampleCategory": {
+        "required": [
+          "label",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "ExistingAssetInput": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "metadata": {
+            "oneOf": [
+              {
+                "nullable": true
+              },
+              {
+                "$ref": "#/components/schemas/MetadataInputCollection"
+              }
+            ]
+          },
+          "identifier": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "FeatureFlagModel": {
+        "required": [
+          "key",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "FileType": {
+        "enum": [
+          "Unknown",
+          "Image",
+          "Video",
+          "Audio"
+        ]
+      },
+      "Filter": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {},
+          "operator": {
+            "$ref": "#/components/schemas/FilterOperator"
+          },
+          "logic": {
+            "$ref": "#/components/schemas/LogicOperator"
+          },
+          "filters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Filter"
+            }
+          }
+        }
+      },
+      "FilterOperator": {
+        "enum": [
+          "Eq",
+          "Neq",
+          "Gt",
+          "Gte",
+          "Lt",
+          "Lte",
+          "Contains",
+          "StartsWith",
+          "EndsWith",
+          "In",
+          "NotContains"
+        ]
+      },
+      "GetAudienceByIdResult": {
+        "required": [
+          "id",
+          "name",
+          "status",
+          "qualifiedUserCount",
+          "filters",
+          "createdAt",
+          "ownerMail",
+          "isPublic",
+          "isDistilling",
+          "distillingCampaignId",
+          "graduationScore",
+          "distillingRetrievalMode",
+          "boostLevel"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/AudienceStatus"
+          },
+          "qualifiedUserCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "filters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IAudienceFilter"
+            }
+          },
+          "logo": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ownerMail": {
+            "type": "string"
+          },
+          "isPublic": {
+            "type": "boolean"
+          },
+          "isDistilling": {
+            "type": "boolean"
+          },
+          "distillingCampaignId": {
+            "type": "string"
+          },
+          "minGraduatedForDistillingBoost": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minDistillingForGlobalBoost": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "graduationScore": {
+            "type": "number",
+            "format": "double"
+          },
+          "demotionScore": {
+            "type": "number",
+            "format": "double"
+          },
+          "maxDistillingResponses": {
+            "type": "integer",
+            "format": "uint32"
+          },
+          "dropMinResponses": {
+            "type": "integer",
+            "format": "uint32"
+          },
+          "dropScore": {
+            "type": "number",
+            "format": "double"
+          },
+          "maxDistillingSessions": {
+            "type": "integer",
+            "format": "uint32"
+          },
+          "inactivityDropDays": {
+            "type": "integer",
+            "format": "uint32"
+          },
+          "minSubmissionRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "minSessionsForSubmissionRate": {
+            "type": "integer",
+            "format": "uint32"
+          },
+          "minSubmissionRateGraduated": {
+            "type": "number",
+            "format": "double"
+          },
+          "distillingRetrievalMode": {
+            "$ref": "#/components/schemas/DistillingRetrievalMode"
+          },
+          "minimumUserScore": {
+            "type": "number",
+            "format": "double"
+          },
+          "minDistillingScoreFloor": {
+            "type": "number",
+            "format": "double"
+          },
+          "minDistillingResponses": {
+            "type": "integer",
+            "format": "uint32"
+          },
+          "boostLevel": {
+            "$ref": "#/components/schemas/BoostLevel"
+          },
+          "randomAdmissionProbability": {
+            "type": "number",
+            "format": "double"
+          },
+          "health": {
+            "type": "number",
+            "format": "double"
+          },
+          "graduated": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "dropped": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "GetAudienceUserStateMetricsResult": {
+        "required": [
+          "usersPerState"
+        ],
+        "type": "object",
+        "properties": {
+          "usersPerState": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      },
+      "IAssetInput": {
+        "required": [
+          "_t"
+        ],
+        "type": "object",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/IAssetInputExistingAssetInput"
+          },
+          {
+            "$ref": "#/components/schemas/IAssetInputMultiAssetInput"
+          },
+          {
+            "$ref": "#/components/schemas/IAssetInputTextAssetInput"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "_t",
+          "mapping": {
+            "ExistingAssetInput": "#/components/schemas/IAssetInputExistingAssetInput",
+            "MultiAssetInput": "#/components/schemas/IAssetInputMultiAssetInput",
+            "TextAssetInput": "#/components/schemas/IAssetInputTextAssetInput"
+          }
+        }
+      },
+      "IAssetInputExistingAssetInput": {
+        "required": [
+          "name",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "ExistingAssetInput"
+            ],
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "metadata": {
+            "oneOf": [
+              {
+                "nullable": true
+              },
+              {
+                "$ref": "#/components/schemas/MetadataInputCollection"
+              }
+            ]
+          },
+          "identifier": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "IAssetInputMultiAssetInput": {
+        "required": [
+          "assets",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "MultiAssetInput"
+            ],
+            "type": "string"
+          },
+          "assets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IAssetInput"
+            }
+          },
+          "metadata": {
+            "oneOf": [
+              {
+                "nullable": true
+              },
+              {
+                "$ref": "#/components/schemas/MetadataInputCollection"
+              }
+            ]
+          },
+          "identifier": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "IAssetInputTextAssetInput": {
+        "required": [
+          "text",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "TextAssetInput"
+            ],
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "metadata": {
+            "oneOf": [
+              {
+                "nullable": true
+              },
+              {
+                "$ref": "#/components/schemas/MetadataInputCollection"
+              }
+            ]
+          },
+          "identifier": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "IAssetModel": {
+        "required": [
+          "_t"
+        ],
+        "type": "object",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/IAssetModelFileAssetModel"
+          },
+          {
+            "$ref": "#/components/schemas/IAssetModelMultiAssetModel"
+          },
+          {
+            "$ref": "#/components/schemas/IAssetModelNullAssetModel"
+          },
+          {
+            "$ref": "#/components/schemas/IAssetModelTextAssetModel"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "_t",
+          "mapping": {
+            "FileAsset": "#/components/schemas/IAssetModelFileAssetModel",
+            "MultiAsset": "#/components/schemas/IAssetModelMultiAssetModel",
+            "NullAsset": "#/components/schemas/IAssetModelNullAssetModel",
+            "TextAsset": "#/components/schemas/IAssetModelTextAssetModel"
+          }
+        }
+      },
+      "IAssetModelFileAssetModel": {
+        "required": [
+          "fileName",
+          "metadata",
+          "identifier",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "FileAsset"
+            ],
+            "type": "string"
+          },
+          "fileName": {
+            "type": "string"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/MetadataModelCollection"
+          },
+          "identifier": {
+            "type": "string"
+          }
+        }
+      },
+      "IAssetModelMultiAssetModel": {
+        "required": [
+          "assets",
+          "metadata",
+          "identifier",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "MultiAsset"
+            ],
+            "type": "string"
+          },
+          "assets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IAssetModel"
+            }
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/MetadataModelCollection"
+          },
+          "identifier": {
+            "type": "string"
+          }
+        }
+      },
+      "IAssetModelNullAssetModel": {
+        "required": [
+          "metadata",
+          "identifier",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "NullAsset"
+            ],
+            "type": "string"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/MetadataModelCollection"
+          },
+          "identifier": {
+            "type": "string"
+          }
+        }
+      },
+      "IAssetModelTextAssetModel": {
+        "required": [
+          "text",
+          "metadata",
+          "identifier",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "TextAsset"
+            ],
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/MetadataModelCollection"
+          },
+          "identifier": {
+            "type": "string"
+          }
+        }
+      },
+      "IAudienceFilter": {
+        "required": [
+          "_t"
+        ],
+        "type": "object",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/IAudienceFilterAndAudienceFilter"
+          },
+          {
+            "$ref": "#/components/schemas/IAudienceFilterCountryAudienceFilter"
+          },
+          {
+            "$ref": "#/components/schemas/IAudienceFilterLanguageAudienceFilter"
+          },
+          {
+            "$ref": "#/components/schemas/IAudienceFilterNotAudienceFilter"
+          },
+          {
+            "$ref": "#/components/schemas/IAudienceFilterOrAudienceFilter"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "_t",
+          "mapping": {
+            "AndFilter": "#/components/schemas/IAudienceFilterAndAudienceFilter",
+            "CountryFilter": "#/components/schemas/IAudienceFilterCountryAudienceFilter",
+            "LanguageFilter": "#/components/schemas/IAudienceFilterLanguageAudienceFilter",
+            "NotFilter": "#/components/schemas/IAudienceFilterNotAudienceFilter",
+            "OrFilter": "#/components/schemas/IAudienceFilterOrAudienceFilter"
+          }
+        }
+      },
+      "IAudienceFilterAndAudienceFilter": {
+        "required": [
+          "filters",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "AndFilter"
+            ],
+            "type": "string"
+          },
+          "filters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IAudienceFilter"
+            }
+          }
+        }
+      },
+      "IAudienceFilterCountryAudienceFilter": {
+        "required": [
+          "countries",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "CountryFilter"
+            ],
+            "type": "string"
+          },
+          "countries": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "IAudienceFilterLanguageAudienceFilter": {
+        "required": [
+          "languages",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "LanguageFilter"
+            ],
+            "type": "string"
+          },
+          "languages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "IAudienceFilterNotAudienceFilter": {
+        "required": [
+          "filter",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "NotFilter"
+            ],
+            "type": "string"
+          },
+          "filter": {
+            "$ref": "#/components/schemas/IAudienceFilter"
+          }
+        }
+      },
+      "IAudienceFilterOrAudienceFilter": {
+        "required": [
+          "filters",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "OrFilter"
+            ],
+            "type": "string"
+          },
+          "filters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IAudienceFilter"
+            }
+          }
+        }
+      },
+      "IExamplePayload": {
+        "required": [
+          "_t"
+        ],
+        "type": "object",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/IExamplePayloadClassifyExamplePayload"
+          },
+          {
+            "$ref": "#/components/schemas/IExamplePayloadCompareExamplePayload"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "_t",
+          "mapping": {
+            "ClassifyExamplePayload": "#/components/schemas/IExamplePayloadClassifyExamplePayload",
+            "CompareExamplePayload": "#/components/schemas/IExamplePayloadCompareExamplePayload"
+          }
+        }
+      },
+      "IExamplePayloadClassifyExamplePayload": {
+        "required": [
+          "categories",
+          "title",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "ClassifyExamplePayload"
+            ],
+            "type": "string"
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExampleCategory"
+            }
+          },
+          "title": {
+            "type": "string"
+          }
+        }
+      },
+      "IExamplePayloadCompareExamplePayload": {
+        "required": [
+          "criteria",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "CompareExamplePayload"
+            ],
+            "type": "string"
+          },
+          "criteria": {
+            "type": "string"
+          }
+        }
+      },
+      "IExampleTruth": {
+        "required": [
+          "_t"
+        ],
+        "type": "object",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/IExampleTruthClassifyExampleTruth"
+          },
+          {
+            "$ref": "#/components/schemas/IExampleTruthCompareExampleTruth"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "_t",
+          "mapping": {
+            "ClassifyExampleTruth": "#/components/schemas/IExampleTruthClassifyExampleTruth",
+            "CompareExampleTruth": "#/components/schemas/IExampleTruthCompareExampleTruth"
+          }
+        }
+      },
+      "IExampleTruthClassifyExampleTruth": {
+        "required": [
+          "correctCategories",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "ClassifyExampleTruth"
+            ],
+            "type": "string"
+          },
+          "correctCategories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "IExampleTruthCompareExampleTruth": {
+        "required": [
+          "winnerId",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "CompareExampleTruth"
+            ],
+            "type": "string"
+          },
+          "winnerId": {
+            "type": "string"
+          }
+        }
+      },
+      "IMetadataInput": {
+        "required": [
+          "_t"
+        ],
+        "type": "object",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/IMetadataInputTextMetadataInput"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "_t",
+          "mapping": {
+            "TextMetadataInput": "#/components/schemas/IMetadataInputTextMetadataInput"
+          }
+        }
+      },
+      "IMetadataInputTextMetadataInput": {
+        "required": [
+          "text",
+          "visibilities",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "TextMetadataInput"
+            ],
+            "type": "string"
+          },
+          "text": {
+            "type": "string",
+            "nullable": true
+          },
+          "visibilities": {
+            "$ref": "#/components/schemas/MetadataVisibilities"
+          }
+        }
+      },
+      "IMetadataModel": {
+        "required": [
+          "_t"
+        ],
+        "type": "object",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/IMetadataModelClassificationMetadataModel"
+          },
+          {
+            "$ref": "#/components/schemas/IMetadataModelCountMetadataModel"
+          },
+          {
+            "$ref": "#/components/schemas/IMetadataModelFileTypeMetadataModel"
+          },
+          {
+            "$ref": "#/components/schemas/IMetadataModelImageDimensionMetadataModel"
+          },
+          {
+            "$ref": "#/components/schemas/IMetadataModelLocationMetadataModel"
+          },
+          {
+            "$ref": "#/components/schemas/IMetadataModelOriginalFilenameMetadataModel"
+          },
+          {
+            "$ref": "#/components/schemas/IMetadataModelSourceUrlMetadataModel"
+          },
+          {
+            "$ref": "#/components/schemas/IMetadataModelStreamsMetadataModel"
+          },
+          {
+            "$ref": "#/components/schemas/IMetadataModelTextMetadataModel"
+          },
+          {
+            "$ref": "#/components/schemas/IMetadataModelVideoDurationMetadataModel"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "_t",
+          "mapping": {
+            "ClassificationMetadata": "#/components/schemas/IMetadataModelClassificationMetadataModel",
+            "CountMetadata": "#/components/schemas/IMetadataModelCountMetadataModel",
+            "FileTypeMetadata": "#/components/schemas/IMetadataModelFileTypeMetadataModel",
+            "ImageDimensionMetadata": "#/components/schemas/IMetadataModelImageDimensionMetadataModel",
+            "LocationMetadata": "#/components/schemas/IMetadataModelLocationMetadataModel",
+            "OriginalFilenameMetadata": "#/components/schemas/IMetadataModelOriginalFilenameMetadataModel",
+            "SourceUrlMetadataModel": "#/components/schemas/IMetadataModelSourceUrlMetadataModel",
+            "StreamsMetadata": "#/components/schemas/IMetadataModelStreamsMetadataModel",
+            "TextMetadata": "#/components/schemas/IMetadataModelTextMetadataModel",
+            "VideoDurationMetadata": "#/components/schemas/IMetadataModelVideoDurationMetadataModel"
+          }
+        }
+      },
+      "IMetadataModelClassificationMetadataModel": {
+        "required": [
+          "classification",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "ClassificationMetadata"
+            ],
+            "type": "string"
+          },
+          "classification": {
+            "type": "string"
+          }
+        }
+      },
+      "IMetadataModelCountMetadataModel": {
+        "required": [
+          "count",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "CountMetadata"
+            ],
+            "type": "string"
+          },
+          "count": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "IMetadataModelFileTypeMetadataModel": {
+        "required": [
+          "fileType",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "FileTypeMetadata"
+            ],
+            "type": "string"
+          },
+          "fileType": {
+            "$ref": "#/components/schemas/FileType"
+          }
+        }
+      },
+      "IMetadataModelImageDimensionMetadataModel": {
+        "required": [
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "ImageDimensionMetadata"
+            ],
+            "type": "string"
+          },
+          "height": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "width": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "IMetadataModelLocationMetadataModel": {
+        "required": [
+          "x",
+          "y",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "LocationMetadata"
+            ],
+            "type": "string"
+          },
+          "x": {
+            "type": "number",
+            "format": "float"
+          },
+          "y": {
+            "type": "number",
+            "format": "float"
+          }
+        }
+      },
+      "IMetadataModelOriginalFilenameMetadataModel": {
+        "required": [
+          "originalFilename",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "OriginalFilenameMetadata"
+            ],
+            "type": "string"
+          },
+          "originalFilename": {
+            "type": "string"
+          }
+        }
+      },
+      "IMetadataModelSourceUrlMetadataModel": {
+        "required": [
+          "url",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "SourceUrlMetadataModel"
+            ],
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "IMetadataModelStreamsMetadataModel": {
+        "required": [
+          "hasVideo",
+          "hasAudio",
+          "hasSubtitles",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "StreamsMetadata"
+            ],
+            "type": "string"
+          },
+          "hasVideo": {
+            "type": "boolean"
+          },
+          "hasAudio": {
+            "type": "boolean"
+          },
+          "hasSubtitles": {
+            "type": "boolean"
+          }
+        }
+      },
+      "IMetadataModelTextMetadataModel": {
+        "required": [
+          "text",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "TextMetadata"
+            ],
+            "type": "string"
+          },
+          "text": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "IMetadataModelVideoDurationMetadataModel": {
+        "required": [
+          "duration",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "VideoDurationMetadata"
+            ],
+            "type": "string"
+          },
+          "duration": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "IRapidPayload": {
+        "required": [
+          "_t"
+        ],
+        "type": "object",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/IRapidPayloadTranscriptionPayload"
+          },
+          {
+            "$ref": "#/components/schemas/IRapidPayloadScrubPayload"
+          },
+          {
+            "$ref": "#/components/schemas/IRapidPayloadPolygonPayload"
+          },
+          {
+            "$ref": "#/components/schemas/IRapidPayloadNamedEntityPayload"
+          },
+          {
+            "$ref": "#/components/schemas/IRapidPayloadLocatePayload"
+          },
+          {
+            "$ref": "#/components/schemas/IRapidPayloadLinePayload"
+          },
+          {
+            "$ref": "#/components/schemas/IRapidPayloadFreeTextPayload"
+          },
+          {
+            "$ref": "#/components/schemas/IRapidPayloadComparePayload"
+          },
+          {
+            "$ref": "#/components/schemas/IRapidPayloadClassifyPayload"
+          },
+          {
+            "$ref": "#/components/schemas/IRapidPayloadBoundingBoxPayload"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "_t",
+          "mapping": {
+            "TranscriptionPayload": "#/components/schemas/IRapidPayloadTranscriptionPayload",
+            "ScrubPayload": "#/components/schemas/IRapidPayloadScrubPayload",
+            "PolygonPayload": "#/components/schemas/IRapidPayloadPolygonPayload",
+            "NamedEntityPayload": "#/components/schemas/IRapidPayloadNamedEntityPayload",
+            "LocatePayload": "#/components/schemas/IRapidPayloadLocatePayload",
+            "LinePayload": "#/components/schemas/IRapidPayloadLinePayload",
+            "FreeTextPayload": "#/components/schemas/IRapidPayloadFreeTextPayload",
+            "ComparePayload": "#/components/schemas/IRapidPayloadComparePayload",
+            "ClassifyPayload": "#/components/schemas/IRapidPayloadClassifyPayload",
+            "BoundingBoxPayload": "#/components/schemas/IRapidPayloadBoundingBoxPayload"
+          }
+        }
+      },
+      "IRapidPayloadBoundingBoxPayload": {
+        "required": [
+          "target",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "BoundingBoxPayload"
+            ],
+            "type": "string"
+          },
+          "target": {
+            "type": "string"
+          }
+        }
+      },
+      "IRapidPayloadClassifyPayload": {
+        "required": [
+          "categories",
+          "title",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "ClassifyPayload"
+            ],
+            "type": "string"
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClassifyPayload_Category"
+            }
+          },
+          "title": {
+            "type": "string"
+          }
+        }
+      },
+      "IRapidPayloadComparePayload": {
+        "required": [
+          "criteria",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "ComparePayload"
+            ],
+            "type": "string"
+          },
+          "criteria": {
+            "type": "string"
+          }
+        }
+      },
+      "IRapidPayloadFreeTextPayload": {
+        "required": [
+          "question",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "FreeTextPayload"
+            ],
+            "type": "string"
+          },
+          "question": {
+            "type": "string"
+          },
+          "shouldValidateResponse": {
+            "type": "boolean"
+          },
+          "validationSystemPrompt": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "IRapidPayloadLinePayload": {
+        "required": [
+          "target",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "LinePayload"
+            ],
+            "type": "string"
+          },
+          "target": {
+            "type": "string"
+          }
+        }
+      },
+      "IRapidPayloadLocatePayload": {
+        "required": [
+          "target",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "LocatePayload"
+            ],
+            "type": "string"
+          },
+          "target": {
+            "type": "string"
+          }
+        }
+      },
+      "IRapidPayloadNamedEntityPayload": {
+        "required": [
+          "target",
+          "classes",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "NamedEntityPayload"
+            ],
+            "type": "string"
+          },
+          "target": {
+            "type": "string"
+          },
+          "classes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "IRapidPayloadPolygonPayload": {
+        "required": [
+          "target",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "PolygonPayload"
+            ],
+            "type": "string"
+          },
+          "target": {
+            "type": "string"
+          }
+        }
+      },
+      "IRapidPayloadScrubPayload": {
+        "required": [
+          "target",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "ScrubPayload"
+            ],
+            "type": "string"
+          },
+          "target": {
+            "type": "string"
+          }
+        }
+      },
+      "IRapidPayloadTranscriptionPayload": {
+        "required": [
+          "title",
+          "transcription",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "TranscriptionPayload"
+            ],
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "transcription": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TranscriptionWord"
+            }
+          }
+        }
+      },
+      "IValidationTruth": {
+        "required": [
+          "_t"
+        ],
+        "type": "object",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/IValidationTruthTranscriptionTruth"
+          },
+          {
+            "$ref": "#/components/schemas/IValidationTruthScrubTruth"
+          },
+          {
+            "$ref": "#/components/schemas/IValidationTruthPolygonTruth"
+          },
+          {
+            "$ref": "#/components/schemas/IValidationTruthNamedEntityTruth"
+          },
+          {
+            "$ref": "#/components/schemas/IValidationTruthLocateBoxTruth"
+          },
+          {
+            "$ref": "#/components/schemas/IValidationTruthLineTruth"
+          },
+          {
+            "$ref": "#/components/schemas/IValidationTruthEmptyValidationTruth"
+          },
+          {
+            "$ref": "#/components/schemas/IValidationTruthCompareTruth"
+          },
+          {
+            "$ref": "#/components/schemas/IValidationTruthMultiCompareTruth"
+          },
+          {
+            "$ref": "#/components/schemas/IValidationTruthSkipTruth"
+          },
+          {
+            "$ref": "#/components/schemas/IValidationTruthAttachCategoryTruth"
+          },
+          {
+            "$ref": "#/components/schemas/IValidationTruthBoundingBoxTruth"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "_t",
+          "mapping": {
+            "TranscriptionTruth": "#/components/schemas/IValidationTruthTranscriptionTruth",
+            "ScrubTruth": "#/components/schemas/IValidationTruthScrubTruth",
+            "PolygonTruth": "#/components/schemas/IValidationTruthPolygonTruth",
+            "NamedEntityTruth": "#/components/schemas/IValidationTruthNamedEntityTruth",
+            "LocateBoxTruth": "#/components/schemas/IValidationTruthLocateBoxTruth",
+            "LineTruth": "#/components/schemas/IValidationTruthLineTruth",
+            "EmptyValidationTruth": "#/components/schemas/IValidationTruthEmptyValidationTruth",
+            "CompareTruth": "#/components/schemas/IValidationTruthCompareTruth",
+            "MultiCompareTruth": "#/components/schemas/IValidationTruthMultiCompareTruth",
+            "SkipTruth": "#/components/schemas/IValidationTruthSkipTruth",
+            "AttachCategoryTruth": "#/components/schemas/IValidationTruthAttachCategoryTruth",
+            "BoundingBoxTruth": "#/components/schemas/IValidationTruthBoundingBoxTruth"
+          }
+        }
+      },
+      "IValidationTruthAttachCategoryTruth": {
+        "required": [
+          "correctCategories",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "AttachCategoryTruth"
+            ],
+            "type": "string"
+          },
+          "correctCategories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "IValidationTruthBoundingBoxTruth": {
+        "required": [
+          "xMin",
+          "yMin",
+          "xMax",
+          "yMax",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "BoundingBoxTruth"
+            ],
+            "type": "string"
+          },
+          "xMin": {
+            "type": "number",
+            "format": "double"
+          },
+          "yMin": {
+            "type": "number",
+            "format": "double"
+          },
+          "xMax": {
+            "type": "number",
+            "format": "double"
+          },
+          "yMax": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "IValidationTruthCompareTruth": {
+        "required": [
+          "winnerId",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "CompareTruth"
+            ],
+            "type": "string"
+          },
+          "winnerId": {
+            "type": "string"
+          }
+        }
+      },
+      "IValidationTruthEmptyValidationTruth": {
+        "required": [
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "EmptyValidationTruth"
+            ],
+            "type": "string"
+          }
+        }
+      },
+      "IValidationTruthLineTruth": {
+        "required": [
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "LineTruth"
+            ],
+            "type": "string"
+          }
+        }
+      },
+      "IValidationTruthLocateBoxTruth": {
+        "required": [
+          "boundingBoxes",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "LocateBoxTruth"
+            ],
+            "type": "string"
+          },
+          "boundingBoxes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BoxShape"
+            }
+          },
+          "requiredPrecision": {
+            "type": "number",
+            "format": "double"
+          },
+          "requiredCompleteness": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "IValidationTruthModel": {
+        "required": [
+          "_t"
+        ],
+        "type": "object",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/IValidationTruthModelAttachCategoryTruthModel"
+          },
+          {
+            "$ref": "#/components/schemas/IValidationTruthModelBoundingBoxTruthModel"
+          },
+          {
+            "$ref": "#/components/schemas/IValidationTruthModelClassifyTruthModel"
+          },
+          {
+            "$ref": "#/components/schemas/IValidationTruthModelCompareTruthModel"
+          },
+          {
+            "$ref": "#/components/schemas/IValidationTruthModelEmptyValidationTruthModel"
+          },
+          {
+            "$ref": "#/components/schemas/IValidationTruthModelLineTruthModel"
+          },
+          {
+            "$ref": "#/components/schemas/IValidationTruthModelLocateBoxTruthModel"
+          },
+          {
+            "$ref": "#/components/schemas/IValidationTruthModelMultiCompareTruthModel"
+          },
+          {
+            "$ref": "#/components/schemas/IValidationTruthModelNamedEntityTruthModel"
+          },
+          {
+            "$ref": "#/components/schemas/IValidationTruthModelPolygonTruthModel"
+          },
+          {
+            "$ref": "#/components/schemas/IValidationTruthModelScrubTruthModel"
+          },
+          {
+            "$ref": "#/components/schemas/IValidationTruthModelSkipTruthModel"
+          },
+          {
+            "$ref": "#/components/schemas/IValidationTruthModelTranscriptionTruthModel"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "_t",
+          "mapping": {
+            "AttachCategoryTruth": "#/components/schemas/IValidationTruthModelAttachCategoryTruthModel",
+            "BoundingBoxTruth": "#/components/schemas/IValidationTruthModelBoundingBoxTruthModel",
+            "ClassifyTruth": "#/components/schemas/IValidationTruthModelClassifyTruthModel",
+            "CompareTruth": "#/components/schemas/IValidationTruthModelCompareTruthModel",
+            "EmptyValidationTruth": "#/components/schemas/IValidationTruthModelEmptyValidationTruthModel",
+            "LineTruth": "#/components/schemas/IValidationTruthModelLineTruthModel",
+            "LocateBoxTruth": "#/components/schemas/IValidationTruthModelLocateBoxTruthModel",
+            "MultiCompareTruth": "#/components/schemas/IValidationTruthModelMultiCompareTruthModel",
+            "NamedEntityTruth": "#/components/schemas/IValidationTruthModelNamedEntityTruthModel",
+            "PolygonTruth": "#/components/schemas/IValidationTruthModelPolygonTruthModel",
+            "ScrubTruth": "#/components/schemas/IValidationTruthModelScrubTruthModel",
+            "SkipTruth": "#/components/schemas/IValidationTruthModelSkipTruthModel",
+            "TranscriptionTruth": "#/components/schemas/IValidationTruthModelTranscriptionTruthModel"
+          }
+        }
+      },
+      "IValidationTruthModelAttachCategoryTruthModel": {
+        "required": [
+          "correctCategories",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "AttachCategoryTruth"
+            ],
+            "type": "string"
+          },
+          "correctCategories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "IValidationTruthModelBoundingBoxTruthModel": {
+        "required": [
+          "xMin",
+          "yMin",
+          "xMax",
+          "yMax",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "BoundingBoxTruth"
+            ],
+            "type": "string"
+          },
+          "xMin": {
+            "type": "number",
+            "format": "double"
+          },
+          "yMin": {
+            "type": "number",
+            "format": "double"
+          },
+          "xMax": {
+            "type": "number",
+            "format": "double"
+          },
+          "yMax": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "IValidationTruthModelClassifyTruthModel": {
+        "required": [
+          "correctCategories",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "ClassifyTruth"
+            ],
+            "type": "string"
+          },
+          "correctCategories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "IValidationTruthModelCompareTruthModel": {
+        "required": [
+          "winnerId",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "CompareTruth"
+            ],
+            "type": "string"
+          },
+          "winnerId": {
+            "type": "string"
+          }
+        }
+      },
+      "IValidationTruthModelEmptyValidationTruthModel": {
+        "required": [
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "EmptyValidationTruth"
+            ],
+            "type": "string"
+          }
+        }
+      },
+      "IValidationTruthModelLineTruthModel": {
+        "required": [
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "LineTruth"
+            ],
+            "type": "string"
+          }
+        }
+      },
+      "IValidationTruthModelLocateBoxTruthModel": {
+        "required": [
+          "boundingBoxes",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "LocateBoxTruth"
+            ],
+            "type": "string"
+          },
+          "boundingBoxes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BoxShape"
+            }
+          },
+          "requiredPrecision": {
+            "type": "number",
+            "format": "double"
+          },
+          "requiredCompleteness": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "IValidationTruthModelMultiCompareTruthModel": {
+        "required": [
+          "correctCombinations",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "MultiCompareTruth"
+            ],
+            "type": "string"
+          },
+          "correctCombinations": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "IValidationTruthModelNamedEntityTruthModel": {
+        "required": [
+          "classifications",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "NamedEntityTruth"
+            ],
+            "type": "string"
+          },
+          "classifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NamedClassification"
+            }
+          }
+        }
+      },
+      "IValidationTruthModelPolygonTruthModel": {
+        "required": [
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "PolygonTruth"
+            ],
+            "type": "string"
+          }
+        }
+      },
+      "IValidationTruthModelScrubTruthModel": {
+        "required": [
+          "validRanges",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "ScrubTruth"
+            ],
+            "type": "string"
+          },
+          "validRanges": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScrubRange"
+            }
+          }
+        }
+      },
+      "IValidationTruthModelSkipTruthModel": {
+        "required": [
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "SkipTruth"
+            ],
+            "type": "string"
+          }
+        }
+      },
+      "IValidationTruthModelTranscriptionTruthModel": {
+        "required": [
+          "correctWords",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "TranscriptionTruth"
+            ],
+            "type": "string"
+          },
+          "correctWords": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TranscriptionWord"
+            }
+          },
+          "strictGrading": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "requiredPrecision": {
+            "type": "number",
+            "format": "double"
+          },
+          "requiredCompleteness": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "IValidationTruthMultiCompareTruth": {
+        "required": [
+          "correctCombinations",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "MultiCompareTruth"
+            ],
+            "type": "string"
+          },
+          "correctCombinations": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "IValidationTruthNamedEntityTruth": {
+        "required": [
+          "classifications",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "NamedEntityTruth"
+            ],
+            "type": "string"
+          },
+          "classifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NamedClassification"
+            }
+          }
+        }
+      },
+      "IValidationTruthPolygonTruth": {
+        "required": [
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "PolygonTruth"
+            ],
+            "type": "string"
+          }
+        }
+      },
+      "IValidationTruthScrubTruth": {
+        "required": [
+          "validRanges",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "ScrubTruth"
+            ],
+            "type": "string"
+          },
+          "validRanges": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScrubRange"
+            }
+          }
+        }
+      },
+      "IValidationTruthSkipTruth": {
+        "required": [
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "SkipTruth"
+            ],
+            "type": "string"
+          }
+        }
+      },
+      "IValidationTruthTranscriptionTruth": {
+        "required": [
+          "correctWords",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "TranscriptionTruth"
+            ],
+            "type": "string"
+          },
+          "correctWords": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TranscriptionWord"
+            }
+          },
+          "strictGrading": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "requiredPrecision": {
+            "type": "number",
+            "format": "double"
+          },
+          "requiredCompleteness": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "LogicOperator": {
+        "enum": [
+          "And",
+          "Or",
+          "Not"
+        ]
+      },
+      "MetadataInputCollection": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/IMetadataInput"
+        }
+      },
+      "MetadataModelCollection": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/IMetadataModel"
+        }
+      },
+      "MetadataVisibilities": {
+        "type": "array",
+        "items": {
+          "enum": [
+            "None",
+            "Users",
+            "Customers",
+            "Admins",
+            "Dashboard",
+            "All"
+          ],
+          "type": "string"
+        }
+      },
+      "NamedClassification": {
+        "required": [
+          "start",
+          "end",
+          "classification"
+        ],
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "end": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "classification": {
+            "type": "string"
+          }
+        }
+      },
+      "PagedResultOfQueryAudiencesResult": {
+        "required": [
+          "total",
+          "page",
+          "pageSize",
+          "items"
+        ],
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QueryAudiencesResult"
+            }
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PagedResultOfQueryJobsResult": {
+        "required": [
+          "total",
+          "page",
+          "pageSize",
+          "items"
+        ],
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QueryJobsResult"
+            }
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PagedResultOfQueryRapidsOutput": {
+        "required": [
+          "total",
+          "page",
+          "pageSize",
+          "items"
+        ],
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QueryRapidsOutput"
+            }
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PageInfo": {
+        "type": "object",
+        "properties": {
+          "index": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "QueryAudiencesResult": {
+        "required": [
+          "id",
+          "name",
+          "status",
+          "qualifiedUserCount",
+          "filters",
+          "createdAt",
+          "ownerMail",
+          "isPublic",
+          "isDistilling"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/AudienceStatus"
+          },
+          "qualifiedUserCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "filters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IAudienceFilter"
+            }
+          },
+          "logo": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ownerMail": {
+            "type": "string"
+          },
+          "isPublic": {
+            "type": "boolean"
+          },
+          "isDistilling": {
+            "type": "boolean"
+          },
+          "randomAdmissionProbability": {
+            "type": "number",
+            "format": "double"
+          },
+          "health": {
+            "type": "number",
+            "format": "double"
+          },
+          "graduated": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "dropped": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "QueryExamplesForAudienceEndpoint_Output": {
+        "required": [
+          "id",
+          "asset",
+          "payload",
+          "correctCount",
+          "incorrectCount"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier of the example."
+          },
+          "rapidId": {
+            "type": "string",
+            "description": "The ID of the rapid associated with this example.",
+            "nullable": true
+          },
+          "asset": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/IAssetModel"
+              }
+            ],
+            "description": "The asset associated with this example."
+          },
+          "payload": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/IExamplePayload"
+              }
+            ],
+            "description": "The payload of the example."
+          },
+          "correctCount": {
+            "type": "integer",
+            "description": "The number of correct responses.",
+            "format": "int32"
+          },
+          "incorrectCount": {
+            "type": "integer",
+            "description": "The number of incorrect responses.",
+            "format": "int32"
+          },
+          "truth": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/IExampleTruth"
+              }
+            ],
+            "description": "The truth value of the example."
+          },
+          "context": {
+            "type": "string",
+            "description": "The context text for the example.",
+            "nullable": true
+          },
+          "contextAsset": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/IAssetModel"
+              }
+            ],
+            "description": "The context asset for the example."
+          },
+          "explanation": {
+            "type": "string",
+            "description": "The explanation for the example.",
+            "nullable": true
+          },
+          "randomCorrectProbability": {
+            "type": "number",
+            "description": "The probability of a random correct answer.",
+            "format": "double"
+          },
+          "isCommonSense": {
+            "type": "boolean",
+            "description": "Whether this example is common sense.",
+            "nullable": true
+          },
+          "sortIndex": {
+            "type": "integer",
+            "description": "The sort index that controls serving order.",
+            "format": "int32"
+          }
+        }
+      },
+      "QueryExamplesForAudienceEndpoint_PagedResultOfOutput": {
+        "required": [
+          "total",
+          "page",
+          "pageSize",
+          "items"
+        ],
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QueryExamplesForAudienceEndpoint_Output"
+            }
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "QueryJobsResult": {
+        "required": [
+          "jobId",
+          "name",
+          "definitionId",
+          "audienceId",
+          "revisionNumber",
+          "pipelineId",
+          "status",
+          "createdAt"
+        ],
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "definitionId": {
+            "type": "string"
+          },
+          "audienceId": {
+            "type": "string"
+          },
+          "revisionNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pipelineId": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/AudienceJobState"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "QueryModel": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "oneOf": [
+              {
+                "nullable": true
+              },
+              {
+                "$ref": "#/components/schemas/PageInfo"
+              }
+            ]
+          },
+          "filter": {
+            "oneOf": [
+              {
+                "nullable": true
+              },
+              {
+                "$ref": "#/components/schemas/RootFilter"
+              }
+            ]
+          },
+          "sortCriteria": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SortCriterion"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "QueryRapidsOutput": {
+        "required": [
+          "id",
+          "type",
+          "asset",
+          "payload",
+          "correctValidationCount",
+          "invalidValidationCount",
+          "state",
+          "isCommonSense"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "asset": {
+            "oneOf": [
+              {
+                "nullable": true
+              },
+              {
+                "$ref": "#/components/schemas/IAssetModel"
+              }
+            ]
+          },
+          "payload": {
+            "$ref": "#/components/schemas/IRapidPayload"
+          },
+          "correctValidationCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "invalidValidationCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "state": {
+            "$ref": "#/components/schemas/RapidState"
+          },
+          "truth": {
+            "oneOf": [
+              {
+                "nullable": true
+              },
+              {
+                "$ref": "#/components/schemas/IValidationTruth"
+              }
+            ]
+          },
+          "context": {
+            "type": "string",
+            "nullable": true
+          },
+          "contextAsset": {
+            "oneOf": [
+              {
+                "nullable": true
+              },
+              {
+                "$ref": "#/components/schemas/IAssetModel"
+              }
+            ]
+          },
+          "explanation": {
+            "type": "string",
+            "nullable": true
+          },
+          "randomCorrectProbability": {
+            "type": "number",
+            "format": "double"
+          },
+          "isCommonSense": {
+            "type": "boolean"
+          }
+        },
+        "description": "Output model for the backwards-compatible rapids query."
+      },
+      "RapidState": {
+        "enum": [
+          "Labeling",
+          "Paused",
+          "Incomplete",
+          "Flagged",
+          "Done",
+          "None",
+          "Rejected"
+        ]
+      },
+      "RecreateExternalAudiencesEndpoint_Input": {
+        "required": [
+          "recreateAll"
+        ],
+        "type": "object",
+        "properties": {
+          "recreateAll": {
+            "type": "boolean",
+            "description": "Whether to recreate all 3 external audiences or only the missing ones."
+          }
+        }
+      },
+      "RootFilter": {
+        "type": "object",
+        "properties": {
+          "filters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Filter"
+            }
+          },
+          "logic": {
+            "$ref": "#/components/schemas/LogicOperator"
+          }
+        }
+      },
+      "ScrubRange": {
+        "required": [
+          "start",
+          "end"
+        ],
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "end": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "SortCriterion": {
+        "required": [
+          "propertyName",
+          "direction"
+        ],
+        "type": "object",
+        "properties": {
+          "propertyName": {
+            "type": "string"
+          },
+          "direction": {
+            "$ref": "#/components/schemas/SortDirection"
+          }
+        }
+      },
+      "SortDirection": {
+        "enum": [
+          "Asc",
+          "Desc"
+        ]
+      },
+      "TranscriptionWord": {
+        "required": [
+          "word",
+          "wordIndex"
+        ],
+        "type": "object",
+        "properties": {
+          "word": {
+            "type": "string"
+          },
+          "wordIndex": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "UpdateAudienceExampleEndpoint_Input": {
+        "type": "object",
+        "properties": {
+          "truth": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/IExampleTruth"
+              },
+              {
+                "nullable": true
+              }
+            ],
+            "description": "The truth for the example."
+          },
+          "explanation": {
+            "type": "string",
+            "description": "The optional explanation that will be shown to the user when answering wrong.",
+            "nullable": true
+          },
+          "context": {
+            "type": "string",
+            "description": "An optional text context that will be shown to the user.",
+            "nullable": true
+          },
+          "contextAsset": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/IAssetInput"
+              },
+              {
+                "nullable": true
+              }
+            ],
+            "description": "An optional asset that will be used as context to show to the user."
+          },
+          "randomCorrectProbability": {
+            "type": "number",
+            "description": "The probability that if the user answers at random that they'll be correct.",
+            "format": "double",
+            "nullable": true
+          },
+          "isCommonSense": {
+            "type": "boolean",
+            "description": "Whether this example should be treated as commonsense validation.",
+            "nullable": true
+          },
+          "sortIndex": {
+            "type": "integer",
+            "description": "The sort index that controls the serving order of this example.",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "description": "Input model for updating an audience example."
+      },
+      "UpdateAudienceRapidEndpoint_Input": {
+        "type": "object",
+        "properties": {
+          "truth": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/IValidationTruthModel"
+              },
+              {
+                "nullable": true
+              }
+            ],
+            "description": "The truth for the validation rapid."
+          },
+          "explanation": {
+            "type": "string",
+            "description": "The optional explanation that will be shown to the user when answering wrong.",
+            "nullable": true
+          },
+          "context": {
+            "type": "string",
+            "description": "An optional text context that will be shown to the user.",
+            "nullable": true
+          },
+          "contextAsset": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/IAssetInput"
+              },
+              {
+                "nullable": true
+              }
+            ],
+            "description": "An optional asset that will be used as context to show to the user."
+          },
+          "randomCorrectProbability": {
+            "type": "number",
+            "description": "The probability that if the user answers at random that they'll be correct.",
+            "format": "double",
+            "nullable": true
+          },
+          "isCommonSense": {
+            "type": "boolean",
+            "description": "Whether this rapid should be treated as commonsense validation.",
+            "nullable": true
+          }
+        },
+        "description": "Input model for updating an audience rapid."
+      },
+      "UpdateAudienceRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The new name to give to this audience.",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "description": "The new description for the audience. Supports markdown. Set to null to remove.",
+            "nullable": true
+          },
+          "filters": {
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/IAudienceFilter"
+                }
+              },
+              {
+                "nullable": true
+              }
+            ],
+            "description": "The new filters to apply to any orders created for this audience.\n A filter can be used to restrict the audience to a specific subset of users."
+          },
+          "logo": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ExistingAssetInput"
+              },
+              {
+                "nullable": true
+              }
+            ],
+            "description": "The new logo image for the audience. Must be an existing image asset.\n Set to null to remove the logo."
+          },
+          "minGraduatedForDistillingBoost": {
+            "type": "integer",
+            "description": "Minimum graduated users before disabling distilling boost.\n When graduated count is below this, external distilling audience ID is added to campaign boosting.",
+            "format": "int32",
+            "nullable": true
+          },
+          "minDistillingForGlobalBoost": {
+            "type": "integer",
+            "description": "Minimum distilling users before disabling global boost.\n When distilling count is below this, GlobalBoostLevel is set above zero.",
+            "format": "int32",
+            "nullable": true
+          },
+          "graduationScore": {
+            "type": "number",
+            "description": "The score used to determine whether a user graduates from the distilling campaign.",
+            "format": "double",
+            "nullable": true
+          },
+          "demotionScore": {
+            "type": "number",
+            "description": "Score below which a graduated user is demoted back to distilling.\n Must be less than or equal to GraduationScore. Set to null to use GraduationScore.",
+            "format": "double",
+            "nullable": true
+          },
+          "maxDistillingResponses": {
+            "type": "integer",
+            "description": "Maximum responses before user exits the distilling campaign.\n Set to null to disable this exit condition.",
+            "format": "uint32",
+            "nullable": true
+          },
+          "dropMinResponses": {
+            "type": "integer",
+            "description": "Minimum responses before the drop score check applies.\n Users need at least this many responses before they can be kicked out for low score.\n Set to null to apply drop score check from the first response.",
+            "format": "uint32",
+            "nullable": true
+          },
+          "dropScore": {
+            "type": "number",
+            "description": "Score floor - users below this score exit the distilling campaign\n (only after completing DropMinResponses).\n Set to null to disable this exit condition.",
+            "format": "double",
+            "nullable": true
+          },
+          "maxDistillingSessions": {
+            "type": "integer",
+            "description": "Maximum sessions (rapid retrievals) before user exits the distilling campaign.\n Set to a value to enable session-based exit condition.",
+            "format": "uint32",
+            "nullable": true
+          },
+          "inactivityDropDays": {
+            "type": "integer",
+            "description": "Number of days of inactivity before a distilling user is dropped.\n Set to null to disable this exit condition.",
+            "format": "uint32",
+            "nullable": true
+          },
+          "minSubmissionRate": {
+            "type": "number",
+            "description": "Minimum submission rate (responses / sessions) before a user is dropped.\n Set to null to disable this exit condition.",
+            "format": "double",
+            "nullable": true
+          },
+          "minSessionsForSubmissionRate": {
+            "type": "integer",
+            "description": "Minimum number of sessions before the submission rate check applies.\n Set to null to apply from the first session.",
+            "format": "uint32",
+            "nullable": true
+          },
+          "minSubmissionRateGraduated": {
+            "type": "number",
+            "description": "Minimum submission rate for graduated users. If null, MinSubmissionRate applies to graduated users.\n Set a lower value to be more lenient with graduated users.",
+            "format": "double",
+            "nullable": true
+          },
+          "distillingRetrievalMode": {
+            "enum": [
+              "Random",
+              "Shuffled",
+              "Sequential"
+            ],
+            "description": "The retrieval mode used by the distilling campaign to select rapids for users."
+          },
+          "minimumUserScore": {
+            "type": "number",
+            "description": "Use instead.",
+            "format": "double",
+            "nullable": true
+          },
+          "minDistillingScoreFloor": {
+            "type": "number",
+            "description": "Use instead.",
+            "format": "double",
+            "nullable": true
+          },
+          "minDistillingResponses": {
+            "type": "integer",
+            "description": "Use instead.",
+            "format": "uint32",
+            "nullable": true
+          }
+        },
+        "description": "The body request to update an audience."
+      },
+      "UpdateBoostConfigEndpoint_Input": {
+        "type": "object",
+        "properties": {
+          "minDistillingForGlobalBoost": {
+            "type": "integer",
+            "description": "Minimum number of distilling users required to activate global boost.",
+            "format": "int32"
+          },
+          "minGraduatedForDistillingBoost": {
+            "type": "integer",
+            "description": "Minimum number of graduated users required to activate distilling boost.",
+            "format": "int32"
+          }
+        }
+      },
+      "ValidationProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "JWT Authorization header using the Bearer scheme",
+        "scheme": "bearer",
+        "bearerFormat": "Json Web Token"
+      },
+      "OpenIdConnect": {
+        "type": "openIdConnect",
+        "description": "OpenId Connect connection flow",
+        "openIdConnectUrl": "https://auth.rabbitdata.ch/.well-known/openid-configuration"
+      },
+      "OAuth2": {
+        "type": "oauth2",
+        "description": "OAuth2 authorization header using the Bearer scheme",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://auth.rabbitdata.ch/connect/authorize",
+            "tokenUrl": "https://auth.rabbitdata.ch/connect/token",
+            "refreshUrl": "https://auth.rabbitdata.ch/connect/token",
+            "scopes": {
+              "openid": "OpenID",
+              "profile": "Profile",
+              "email": "Email"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [],
+      "OpenIdConnect": [
+        "openid",
+        "profile",
+        "email"
+      ],
+      "OAuth2": [
+        "openid",
+        "profile",
+        "email"
+      ]
+    }
+  ],
+  "tags": [
+    {
+      "name": "Audience"
+    }
+  ]
+}

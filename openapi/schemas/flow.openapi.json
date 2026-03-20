@@ -1,0 +1,2380 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "Rapidata Flow API",
+    "description": "The API for the Rapidata Flow service",
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "https://api.rabbitdata.ch/"
+    }
+  ],
+  "paths": {
+    "/flow/{flowId}": {
+      "delete": {
+        "tags": [
+          "Flow"
+        ],
+        "summary": "Deletes a flow.",
+        "parameters": [
+          {
+            "name": "flowId",
+            "in": "path",
+            "description": "The ID of the flow to delete.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Flow"
+        ],
+        "summary": "Retrieves a flow by its ID.",
+        "parameters": [
+          {
+            "name": "flowId",
+            "in": "path",
+            "description": "The ID of the flow to retrieve.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetFlowByIdEndpoint_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/flow/ranking/{flowId}/completion-time-histogram": {
+      "get": {
+        "tags": [
+          "Flow"
+        ],
+        "summary": "Returns the distribution of completion durations (in seconds) per completed flow item.",
+        "parameters": [
+          {
+            "name": "flowId",
+            "in": "path",
+            "description": "The ID of the flow.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "Optional start of the date range filter (inclusive).",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "Optional end of the date range filter (inclusive).",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "bucketCount",
+            "in": "query",
+            "description": "Number of histogram buckets (default 10, max 100).",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCompletionTimeHistogramEndpoint_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/flow/ranking/{flowId}/flow-item-creation-timeseries": {
+      "get": {
+        "tags": [
+          "Flow"
+        ],
+        "summary": "Returns flow item creation counts bucketed over time.",
+        "parameters": [
+          {
+            "name": "flowId",
+            "in": "path",
+            "description": "The ID of the flow.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "Optional start of the date range filter (inclusive).",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "Optional end of the date range filter (exclusive).",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "datapoints",
+            "in": "query",
+            "description": "Number of time buckets (default 100, max 1000).",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetFlowItemCreationTimeseriesEndpoint_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/flow/ranking/{flowId}/response-count-histogram": {
+      "get": {
+        "tags": [
+          "Flow"
+        ],
+        "summary": "Returns the distribution of total votes per completed flow item.",
+        "parameters": [
+          {
+            "name": "flowId",
+            "in": "path",
+            "description": "The ID of the flow.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "Optional start of the date range filter (inclusive).",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "Optional end of the date range filter (inclusive).",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "bucketCount",
+            "in": "query",
+            "description": "Number of histogram buckets (default 10, max 100).",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetResponseCountHistogramEndpoint_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/flow/ranking/{flowId}/response-count-timeseries": {
+      "get": {
+        "tags": [
+          "Flow"
+        ],
+        "summary": "Returns average response counts bucketed over time for completed flow items.",
+        "parameters": [
+          {
+            "name": "flowId",
+            "in": "path",
+            "description": "The ID of the flow.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "Optional start of the date range filter (inclusive).",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "Optional end of the date range filter (exclusive).",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "datapoints",
+            "in": "query",
+            "description": "Number of time buckets (default 100, max 1000).",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetResponseCountTimeseriesEndpoint_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/flow": {
+      "get": {
+        "tags": [
+          "Flow"
+        ],
+        "summary": "Queries flows with filtering and pagination.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The 1-based page index.",
+            "schema": {
+              "type": "integer"
+            },
+            "x-parameter-group": "page"
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "The number of items per page.",
+            "schema": {
+              "type": "integer"
+            },
+            "x-parameter-group": "page"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort fields. Prefix with - for descending order (e.g. -created_at).",
+            "schema": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "name",
+                  "-name",
+                  "created_at",
+                  "-created_at"
+                ],
+                "type": "string"
+              }
+            },
+            "x-parameter-group": "sort"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Filter by name.",
+            "style": "deepObject",
+            "explode": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "eq": {
+                  "type": "string"
+                },
+                "neq": {
+                  "type": "string"
+                },
+                "gt": {
+                  "type": "string"
+                },
+                "gte": {
+                  "type": "string"
+                },
+                "lt": {
+                  "type": "string"
+                },
+                "lte": {
+                  "type": "string"
+                },
+                "contains": {
+                  "type": "string"
+                },
+                "starts_with": {
+                  "type": "string"
+                },
+                "ends_with": {
+                  "type": "string"
+                },
+                "in": {
+                  "type": "string"
+                },
+                "not_contains": {
+                  "type": "string"
+                }
+              }
+            },
+            "x-parameter-group": "filters"
+          },
+          {
+            "name": "created_at",
+            "in": "query",
+            "description": "Filter by created_at.",
+            "style": "deepObject",
+            "explode": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "eq": {
+                  "type": "string"
+                },
+                "neq": {
+                  "type": "string"
+                },
+                "gt": {
+                  "type": "string"
+                },
+                "gte": {
+                  "type": "string"
+                },
+                "lt": {
+                  "type": "string"
+                },
+                "lte": {
+                  "type": "string"
+                },
+                "contains": {
+                  "type": "string"
+                },
+                "starts_with": {
+                  "type": "string"
+                },
+                "ends_with": {
+                  "type": "string"
+                },
+                "in": {
+                  "type": "string"
+                },
+                "not_contains": {
+                  "type": "string"
+                }
+              }
+            },
+            "x-parameter-group": "filters"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueryFlowsEndpoint_PagedResultOfOutput"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/flow/item/{flowItemId}/stop": {
+      "post": {
+        "tags": [
+          "FlowItem"
+        ],
+        "summary": "Stops the specified flow item and triggers partial result processing.",
+        "parameters": [
+          {
+            "name": "flowItemId",
+            "in": "path",
+            "description": "The ID of the flow item to stop.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/flow/ranking": {
+      "post": {
+        "tags": [
+          "RankingFlow"
+        ],
+        "summary": "Creates a new ranking flow.",
+        "requestBody": {
+          "description": "The ranking flow creation parameters.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFlowEndpoint_Input"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateFlowEndpoint_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/flow/ranking/{flowId}/config": {
+      "patch": {
+        "tags": [
+          "RankingFlow"
+        ],
+        "summary": "Updates the configuration of a ranking flow.",
+        "parameters": [
+          {
+            "name": "flowId",
+            "in": "path",
+            "description": "The ID of the ranking flow to update.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The configuration fields to update.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateConfigEndpoint_Input"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/flow/ranking/{flowId}/item": {
+      "post": {
+        "tags": [
+          "RankingFlowItem"
+        ],
+        "summary": "Creates a new flow item for the specified flow.",
+        "parameters": [
+          {
+            "name": "flowId",
+            "in": "path",
+            "description": "The ID of the flow to create the item in.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The flow item creation parameters.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFlowItemEndpoint_Input"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateFlowItemEndpoint_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "RankingFlowItem"
+        ],
+        "summary": "Queries flow items for a flow.",
+        "parameters": [
+          {
+            "name": "flowId",
+            "in": "path",
+            "description": "The ID of the flow to query items for.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The 1-based page index.",
+            "schema": {
+              "type": "integer"
+            },
+            "x-parameter-group": "page"
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "The number of items per page.",
+            "schema": {
+              "type": "integer"
+            },
+            "x-parameter-group": "page"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort fields. Prefix with - for descending order (e.g. -created_at).",
+            "schema": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "state",
+                  "-state",
+                  "created_at",
+                  "-created_at"
+                ],
+                "type": "string"
+              }
+            },
+            "x-parameter-group": "sort"
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "Filter by state.",
+            "style": "deepObject",
+            "explode": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "eq": {
+                  "type": "string"
+                },
+                "neq": {
+                  "type": "string"
+                },
+                "gt": {
+                  "type": "string"
+                },
+                "gte": {
+                  "type": "string"
+                },
+                "lt": {
+                  "type": "string"
+                },
+                "lte": {
+                  "type": "string"
+                },
+                "contains": {
+                  "type": "string"
+                },
+                "starts_with": {
+                  "type": "string"
+                },
+                "ends_with": {
+                  "type": "string"
+                },
+                "in": {
+                  "type": "string"
+                },
+                "not_contains": {
+                  "type": "string"
+                }
+              }
+            },
+            "x-parameter-group": "filters"
+          },
+          {
+            "name": "created_at",
+            "in": "query",
+            "description": "Filter by created_at.",
+            "style": "deepObject",
+            "explode": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "eq": {
+                  "type": "string"
+                },
+                "neq": {
+                  "type": "string"
+                },
+                "gt": {
+                  "type": "string"
+                },
+                "gte": {
+                  "type": "string"
+                },
+                "lt": {
+                  "type": "string"
+                },
+                "lte": {
+                  "type": "string"
+                },
+                "contains": {
+                  "type": "string"
+                },
+                "starts_with": {
+                  "type": "string"
+                },
+                "ends_with": {
+                  "type": "string"
+                },
+                "in": {
+                  "type": "string"
+                },
+                "not_contains": {
+                  "type": "string"
+                }
+              }
+            },
+            "x-parameter-group": "filters"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueryFlowItemsEndpoint_PagedResultOfOutput"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/flow/ranking/item/{flowItemId}": {
+      "get": {
+        "tags": [
+          "RankingFlowItem"
+        ],
+        "summary": "Retrieves a flow item by its ID.",
+        "parameters": [
+          {
+            "name": "flowItemId",
+            "in": "path",
+            "description": "The ID of the flow item to retrieve.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetFlowItemByIdEndpoint_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/flow/ranking/item/{flowItemId}/results": {
+      "get": {
+        "tags": [
+          "RankingFlowItem"
+        ],
+        "summary": "Returns ranking results with Elo scores for a completed flow item.",
+        "description": "Returns 409 Conflict if the flow item is not yet completed or has no associated workflow.",
+        "parameters": [
+          {
+            "name": "flowItemId",
+            "in": "path",
+            "description": "The ID of the flow item to get results for.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetRankingFlowItemResultsEndpoint_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flow/ranking/item/{flowItemId}/vote-matrix": {
+      "get": {
+        "tags": [
+          "RankingFlowItem"
+        ],
+        "summary": "Retrieves the pairwise vote matrix for a completed flow item.",
+        "description": "Returns 409 Conflict if the flow item is not completed or has no associated workflow.",
+        "parameters": [
+          {
+            "name": "flowItemId",
+            "in": "path",
+            "description": "The ID of the flow item to get the vote matrix for.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetRankingFlowItemVoteMatrixEndpoint_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateFlowEndpoint_Input": {
+        "required": [
+          "name",
+          "criteria"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the ranking flow."
+          },
+          "criteria": {
+            "type": "string",
+            "description": "The ranking criteria used to compare items."
+          },
+          "validationSetId": {
+            "type": "string",
+            "description": "Optional ID of the validation set to use.",
+            "nullable": true
+          },
+          "startingElo": {
+            "type": "integer",
+            "description": "Initial Elo rating for new items. Defaults to 1200.",
+            "format": "int32"
+          },
+          "kFactor": {
+            "type": "integer",
+            "description": "K-factor controlling Elo rating sensitivity. Defaults to 40.",
+            "format": "int32"
+          },
+          "scalingFactor": {
+            "type": "integer",
+            "description": "Scaling factor for Elo probability calculation. Defaults to 400.",
+            "format": "int32"
+          },
+          "maxResponses": {
+            "type": "integer",
+            "description": "Maximum number of responses per comparison.",
+            "format": "int32"
+          },
+          "serveToResponseRatio": {
+            "type": "number",
+            "description": "Ratio of concurrent serves to max responses. When set, limits serving to avoid over-collection.",
+            "format": "double"
+          },
+          "serveTimeoutSeconds": {
+            "type": "integer",
+            "description": "Time in seconds a user has to submit an answer after loading the task. When set, overrides the global default.",
+            "format": "int32"
+          },
+          "minResponses": {
+            "type": "integer",
+            "description": "Minimum number of responses per comparison. Defaults to 1.",
+            "format": "int32"
+          },
+          "responsesRequired": {
+            "type": "integer",
+            "description": "Deprecated. Use MaxResponses instead.",
+            "format": "int32"
+          },
+          "featureFlags": {
+            "allOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/FeatureFlag"
+                },
+                "nullable": true
+              }
+            ],
+            "description": "Optional feature flags to enable for this flow."
+          }
+        }
+      },
+      "CreateFlowEndpoint_Output": {
+        "required": [
+          "flowId"
+        ],
+        "type": "object",
+        "properties": {
+          "flowId": {
+            "type": "string",
+            "description": "The ID of the created ranking flow."
+          }
+        }
+      },
+      "CreateFlowItemEndpoint_Input": {
+        "required": [
+          "datasetId"
+        ],
+        "type": "object",
+        "properties": {
+          "datasetId": {
+            "type": "string",
+            "description": "The ID of the dataset to use for this flow item."
+          },
+          "context": {
+            "type": "string",
+            "description": "Optional context to provide additional ranking guidance.",
+            "nullable": true
+          },
+          "timeToLiveInSeconds": {
+            "type": "integer",
+            "description": "Optional time-to-live in seconds before the flow item expires.",
+            "format": "int32"
+          },
+          "drainDurationInSeconds": {
+            "type": "integer",
+            "description": "Optional drain duration in seconds. When set, rapids are paused this many seconds before TTL expiry to allow in-flight responses to complete.",
+            "format": "int32"
+          }
+        }
+      },
+      "CreateFlowItemEndpoint_Output": {
+        "required": [
+          "flowItemId"
+        ],
+        "type": "object",
+        "properties": {
+          "flowItemId": {
+            "type": "string",
+            "description": "The ID of the created flow item."
+          }
+        }
+      },
+      "FeatureFlag": {
+        "required": [
+          "key",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "FileType": {
+        "enum": [
+          "Unknown",
+          "Image",
+          "Video",
+          "Audio"
+        ]
+      },
+      "FlowItemState": {
+        "enum": [
+          "Pending",
+          "Running",
+          "Completed",
+          "Failed",
+          "Stopping",
+          "Stopped",
+          "Incomplete"
+        ],
+        "description": "The current state of the flow item."
+      },
+      "FlowType": {
+        "enum": [
+          "Ranking"
+        ],
+        "description": "The type of the flow."
+      },
+      "GetCompletionTimeHistogramEndpoint_Output": {
+        "required": [
+          "buckets"
+        ],
+        "type": "object",
+        "properties": {
+          "buckets": {
+            "allOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/GetCompletionTimeHistogramEndpoint_Output_Bucket"
+                }
+              }
+            ],
+            "description": "The histogram buckets."
+          }
+        }
+      },
+      "GetCompletionTimeHistogramEndpoint_Output_Bucket": {
+        "required": [
+          "lowerBound",
+          "upperBound",
+          "count"
+        ],
+        "type": "object",
+        "properties": {
+          "lowerBound": {
+            "type": "number",
+            "format": "double"
+          },
+          "upperBound": {
+            "type": "number",
+            "format": "double"
+          },
+          "count": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "GetFlowByIdEndpoint_Output": {
+        "required": [
+          "id",
+          "name",
+          "type",
+          "ownerId",
+          "ownerMail",
+          "createdAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier of the flow."
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the flow."
+          },
+          "type": {
+            "$ref": "#/components/schemas/FlowType"
+          },
+          "ownerId": {
+            "type": "string",
+            "description": "The ID of the customer who owns the flow.",
+            "format": "uuid"
+          },
+          "ownerMail": {
+            "type": "string",
+            "description": "The email of the customer who owns the flow."
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "The timestamp when the flow was created.",
+            "format": "date-time"
+          }
+        }
+      },
+      "GetFlowItemByIdEndpoint_Output": {
+        "required": [
+          "id",
+          "flowId",
+          "datasetId",
+          "state",
+          "createdAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier of the flow item."
+          },
+          "flowId": {
+            "type": "string",
+            "description": "The ID of the flow this item belongs to."
+          },
+          "datasetId": {
+            "type": "string",
+            "description": "The ID of the dataset used by this flow item."
+          },
+          "workflowId": {
+            "type": "string",
+            "description": "The ID of the workflow created for this flow item.",
+            "nullable": true
+          },
+          "state": {
+            "$ref": "#/components/schemas/FlowItemState"
+          },
+          "context": {
+            "type": "string",
+            "description": "Optional context associated with this flow item.",
+            "nullable": true
+          },
+          "failureMessage": {
+            "type": "string",
+            "description": "The failure message if the flow item failed.",
+            "nullable": true
+          },
+          "expiresAt": {
+            "type": "string",
+            "description": "The expiration timestamp of the flow item.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "The timestamp when the flow item was created.",
+            "format": "date-time"
+          },
+          "startedAt": {
+            "type": "string",
+            "description": "The timestamp when the flow item started processing.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "completedAt": {
+            "type": "string",
+            "description": "The timestamp when the flow item completed.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "failedAt": {
+            "type": "string",
+            "description": "The timestamp when the flow item failed.",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      },
+      "GetFlowItemCreationTimeseriesEndpoint_Output": {
+        "required": [
+          "datapoints"
+        ],
+        "type": "object",
+        "properties": {
+          "datapoints": {
+            "allOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/GetFlowItemCreationTimeseriesEndpoint_Output_DataPoint"
+                }
+              }
+            ],
+            "description": "The timeseries data points."
+          }
+        }
+      },
+      "GetFlowItemCreationTimeseriesEndpoint_Output_DataPoint": {
+        "required": [
+          "timestamp",
+          "count"
+        ],
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "count": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "GetRankingFlowItemResultsEndpoint_Output": {
+        "required": [
+          "datapoints",
+          "totalVotes"
+        ],
+        "type": "object",
+        "properties": {
+          "datapoints": {
+            "allOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/GetRankingFlowItemResultsEndpoint_Output_Datapoint"
+                }
+              }
+            ],
+            "description": "The ranked datapoints with their Elo scores."
+          },
+          "totalVotes": {
+            "type": "integer",
+            "description": "The total number of votes across all datapoints.",
+            "format": "int64"
+          }
+        }
+      },
+      "GetRankingFlowItemResultsEndpoint_Output_Datapoint": {
+        "required": [
+          "id",
+          "asset",
+          "elo"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "asset": {
+            "$ref": "#/components/schemas/IAssetModel"
+          },
+          "elo": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "GetRankingFlowItemVoteMatrixEndpoint_Output": {
+        "required": [
+          "index",
+          "columns",
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "index": {
+            "allOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ],
+            "description": "Row labels of the vote matrix."
+          },
+          "columns": {
+            "allOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ],
+            "description": "Column labels of the vote matrix."
+          },
+          "data": {
+            "allOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "format": "double"
+                  }
+                }
+              }
+            ],
+            "description": "The vote counts as a two-dimensional matrix where Data[i][j] is the number of times row i was preferred over column j."
+          }
+        }
+      },
+      "GetResponseCountHistogramEndpoint_Output": {
+        "required": [
+          "buckets"
+        ],
+        "type": "object",
+        "properties": {
+          "buckets": {
+            "allOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/GetResponseCountHistogramEndpoint_Output_Bucket"
+                }
+              }
+            ],
+            "description": "The histogram buckets."
+          }
+        }
+      },
+      "GetResponseCountHistogramEndpoint_Output_Bucket": {
+        "required": [
+          "lowerBound",
+          "upperBound",
+          "count"
+        ],
+        "type": "object",
+        "properties": {
+          "lowerBound": {
+            "type": "number",
+            "format": "double"
+          },
+          "upperBound": {
+            "type": "number",
+            "format": "double"
+          },
+          "count": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "GetResponseCountTimeseriesEndpoint_Output": {
+        "required": [
+          "datapoints"
+        ],
+        "type": "object",
+        "properties": {
+          "datapoints": {
+            "allOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/GetResponseCountTimeseriesEndpoint_Output_DataPoint"
+                }
+              }
+            ],
+            "description": "The timeseries data points."
+          }
+        }
+      },
+      "GetResponseCountTimeseriesEndpoint_Output_DataPoint": {
+        "required": [
+          "timestamp",
+          "averageResponseCount"
+        ],
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "averageResponseCount": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "IAssetModel": {
+        "required": [
+          "_t"
+        ],
+        "type": "object",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/IAssetModelFileAssetModel"
+          },
+          {
+            "$ref": "#/components/schemas/IAssetModelMultiAssetModel"
+          },
+          {
+            "$ref": "#/components/schemas/IAssetModelNullAssetModel"
+          },
+          {
+            "$ref": "#/components/schemas/IAssetModelTextAssetModel"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "_t",
+          "mapping": {
+            "FileAsset": "#/components/schemas/IAssetModelFileAssetModel",
+            "MultiAsset": "#/components/schemas/IAssetModelMultiAssetModel",
+            "NullAsset": "#/components/schemas/IAssetModelNullAssetModel",
+            "TextAsset": "#/components/schemas/IAssetModelTextAssetModel"
+          }
+        }
+      },
+      "IAssetModelFileAssetModel": {
+        "required": [
+          "fileName",
+          "metadata",
+          "identifier",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "FileAsset"
+            ],
+            "type": "string"
+          },
+          "fileName": {
+            "type": "string"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/MetadataModelCollection"
+          },
+          "identifier": {
+            "type": "string"
+          }
+        }
+      },
+      "IAssetModelMultiAssetModel": {
+        "required": [
+          "assets",
+          "metadata",
+          "identifier",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "MultiAsset"
+            ],
+            "type": "string"
+          },
+          "assets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IAssetModel"
+            }
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/MetadataModelCollection"
+          },
+          "identifier": {
+            "type": "string"
+          }
+        }
+      },
+      "IAssetModelNullAssetModel": {
+        "required": [
+          "metadata",
+          "identifier",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "NullAsset"
+            ],
+            "type": "string"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/MetadataModelCollection"
+          },
+          "identifier": {
+            "type": "string"
+          }
+        }
+      },
+      "IAssetModelTextAssetModel": {
+        "required": [
+          "text",
+          "metadata",
+          "identifier",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "TextAsset"
+            ],
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/MetadataModelCollection"
+          },
+          "identifier": {
+            "type": "string"
+          }
+        }
+      },
+      "IMetadataModel": {
+        "required": [
+          "_t"
+        ],
+        "type": "object",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/IMetadataModelClassificationMetadataModel"
+          },
+          {
+            "$ref": "#/components/schemas/IMetadataModelCountMetadataModel"
+          },
+          {
+            "$ref": "#/components/schemas/IMetadataModelFileTypeMetadataModel"
+          },
+          {
+            "$ref": "#/components/schemas/IMetadataModelImageDimensionMetadataModel"
+          },
+          {
+            "$ref": "#/components/schemas/IMetadataModelLocationMetadataModel"
+          },
+          {
+            "$ref": "#/components/schemas/IMetadataModelOriginalFilenameMetadataModel"
+          },
+          {
+            "$ref": "#/components/schemas/IMetadataModelSourceUrlMetadataModel"
+          },
+          {
+            "$ref": "#/components/schemas/IMetadataModelStreamsMetadataModel"
+          },
+          {
+            "$ref": "#/components/schemas/IMetadataModelTextMetadataModel"
+          },
+          {
+            "$ref": "#/components/schemas/IMetadataModelVideoDurationMetadataModel"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "_t",
+          "mapping": {
+            "ClassificationMetadata": "#/components/schemas/IMetadataModelClassificationMetadataModel",
+            "CountMetadata": "#/components/schemas/IMetadataModelCountMetadataModel",
+            "FileTypeMetadata": "#/components/schemas/IMetadataModelFileTypeMetadataModel",
+            "ImageDimensionMetadata": "#/components/schemas/IMetadataModelImageDimensionMetadataModel",
+            "LocationMetadata": "#/components/schemas/IMetadataModelLocationMetadataModel",
+            "OriginalFilenameMetadata": "#/components/schemas/IMetadataModelOriginalFilenameMetadataModel",
+            "SourceUrlMetadataModel": "#/components/schemas/IMetadataModelSourceUrlMetadataModel",
+            "StreamsMetadata": "#/components/schemas/IMetadataModelStreamsMetadataModel",
+            "TextMetadata": "#/components/schemas/IMetadataModelTextMetadataModel",
+            "VideoDurationMetadata": "#/components/schemas/IMetadataModelVideoDurationMetadataModel"
+          }
+        }
+      },
+      "IMetadataModelClassificationMetadataModel": {
+        "required": [
+          "classification",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "ClassificationMetadata"
+            ],
+            "type": "string"
+          },
+          "classification": {
+            "type": "string"
+          }
+        }
+      },
+      "IMetadataModelCountMetadataModel": {
+        "required": [
+          "count",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "CountMetadata"
+            ],
+            "type": "string"
+          },
+          "count": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "IMetadataModelFileTypeMetadataModel": {
+        "required": [
+          "fileType",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "FileTypeMetadata"
+            ],
+            "type": "string"
+          },
+          "fileType": {
+            "$ref": "#/components/schemas/FileType"
+          }
+        }
+      },
+      "IMetadataModelImageDimensionMetadataModel": {
+        "required": [
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "ImageDimensionMetadata"
+            ],
+            "type": "string"
+          },
+          "height": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "width": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "IMetadataModelLocationMetadataModel": {
+        "required": [
+          "x",
+          "y",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "LocationMetadata"
+            ],
+            "type": "string"
+          },
+          "x": {
+            "type": "number",
+            "format": "float"
+          },
+          "y": {
+            "type": "number",
+            "format": "float"
+          }
+        }
+      },
+      "IMetadataModelOriginalFilenameMetadataModel": {
+        "required": [
+          "originalFilename",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "OriginalFilenameMetadata"
+            ],
+            "type": "string"
+          },
+          "originalFilename": {
+            "type": "string"
+          }
+        }
+      },
+      "IMetadataModelSourceUrlMetadataModel": {
+        "required": [
+          "url",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "SourceUrlMetadataModel"
+            ],
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "IMetadataModelStreamsMetadataModel": {
+        "required": [
+          "hasVideo",
+          "hasAudio",
+          "hasSubtitles",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "StreamsMetadata"
+            ],
+            "type": "string"
+          },
+          "hasVideo": {
+            "type": "boolean"
+          },
+          "hasAudio": {
+            "type": "boolean"
+          },
+          "hasSubtitles": {
+            "type": "boolean"
+          }
+        }
+      },
+      "IMetadataModelTextMetadataModel": {
+        "required": [
+          "text",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "TextMetadata"
+            ],
+            "type": "string"
+          },
+          "text": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "IMetadataModelVideoDurationMetadataModel": {
+        "required": [
+          "duration",
+          "_t"
+        ],
+        "properties": {
+          "_t": {
+            "enum": [
+              "VideoDurationMetadata"
+            ],
+            "type": "string"
+          },
+          "duration": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "MetadataModelCollection": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/IMetadataModel"
+        }
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "QueryFlowItemsEndpoint_Output": {
+        "required": [
+          "id",
+          "datasetId",
+          "state",
+          "createdAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier of the flow item."
+          },
+          "datasetId": {
+            "type": "string",
+            "description": "The ID of the dataset used by this flow item."
+          },
+          "workflowId": {
+            "type": "string",
+            "description": "The ID of the workflow created for this flow item.",
+            "nullable": true
+          },
+          "state": {
+            "$ref": "#/components/schemas/FlowItemState"
+          },
+          "context": {
+            "type": "string",
+            "description": "Optional context associated with this flow item.",
+            "nullable": true
+          },
+          "failureMessage": {
+            "type": "string",
+            "description": "The failure message if the flow item failed.",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "The timestamp when the flow item was created.",
+            "format": "date-time"
+          },
+          "startedAt": {
+            "type": "string",
+            "description": "The timestamp when the flow item started processing.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "completedAt": {
+            "type": "string",
+            "description": "The timestamp when the flow item completed.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "failedAt": {
+            "type": "string",
+            "description": "The timestamp when the flow item failed.",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      },
+      "QueryFlowItemsEndpoint_PagedResultOfOutput": {
+        "required": [
+          "total",
+          "page",
+          "pageSize",
+          "items"
+        ],
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QueryFlowItemsEndpoint_Output"
+            }
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "QueryFlowsEndpoint_Output": {
+        "required": [
+          "id",
+          "name",
+          "type",
+          "ownerId",
+          "ownerMail",
+          "createdAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier of the flow."
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the flow."
+          },
+          "type": {
+            "$ref": "#/components/schemas/FlowType"
+          },
+          "ownerId": {
+            "type": "string",
+            "description": "The ID of the customer who owns the flow.",
+            "format": "uuid"
+          },
+          "ownerMail": {
+            "type": "string",
+            "description": "The email of the customer who owns the flow."
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "The timestamp when the flow was created.",
+            "format": "date-time"
+          }
+        }
+      },
+      "QueryFlowsEndpoint_PagedResultOfOutput": {
+        "required": [
+          "total",
+          "page",
+          "pageSize",
+          "items"
+        ],
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QueryFlowsEndpoint_Output"
+            }
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "UpdateConfigEndpoint_Input": {
+        "type": "object",
+        "properties": {
+          "criteria": {
+            "type": "string",
+            "description": "The ranking criteria used to compare items.",
+            "nullable": true
+          },
+          "startingElo": {
+            "type": "integer",
+            "description": "Initial Elo rating for new items.",
+            "format": "int32",
+            "nullable": true
+          },
+          "kFactor": {
+            "type": "integer",
+            "description": "K-factor controlling Elo rating sensitivity.",
+            "format": "int32",
+            "nullable": true
+          },
+          "scalingFactor": {
+            "type": "integer",
+            "description": "Scaling factor for Elo probability calculation.",
+            "format": "int32",
+            "nullable": true
+          },
+          "minResponses": {
+            "type": "integer",
+            "description": "Minimum number of responses per comparison.",
+            "format": "int32",
+            "nullable": true
+          },
+          "maxResponses": {
+            "type": "integer",
+            "description": "Maximum number of responses per comparison.",
+            "format": "int32",
+            "nullable": true
+          },
+          "serveToResponseRatio": {
+            "type": "number",
+            "description": "Ratio of concurrent serves to max responses. Set to null to remove the limit.",
+            "format": "double",
+            "nullable": true
+          },
+          "serveTimeoutSeconds": {
+            "type": "integer",
+            "description": "Time in seconds a user has to submit an answer after loading the task. Set to null to use the global default.",
+            "format": "int32",
+            "nullable": true
+          },
+          "responsesRequired": {
+            "type": "integer",
+            "description": "Deprecated. Use MaxResponses instead.",
+            "format": "int32",
+            "nullable": true
+          },
+          "featureFlags": {
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/FeatureFlag"
+                }
+              },
+              {
+                "nullable": true
+              }
+            ],
+            "description": "Feature flags to enable for this flow."
+          },
+          "targetResponseCount": {
+            "type": "integer",
+            "description": "Target average response count per completed item. Set to null to disable PID control.",
+            "format": "int32",
+            "nullable": true
+          },
+          "pidProportionalGain": {
+            "type": "number",
+            "description": "PID proportional gain.",
+            "format": "double",
+            "nullable": true
+          },
+          "pidIntegralGain": {
+            "type": "number",
+            "description": "PID integral gain.",
+            "format": "double",
+            "nullable": true
+          },
+          "pidDerivativeGain": {
+            "type": "number",
+            "description": "PID derivative gain.",
+            "format": "double",
+            "nullable": true
+          },
+          "pidMinSessionsPerMinute": {
+            "type": "integer",
+            "description": "Minimum sessions per minute the PID can set.",
+            "format": "int32",
+            "nullable": true
+          },
+          "pidMaxSessionsPerMinute": {
+            "type": "integer",
+            "description": "Maximum sessions per minute the PID can set.",
+            "format": "int32",
+            "nullable": true
+          },
+          "pidBatchMode": {
+            "enum": [
+              "Total",
+              "PerBatch",
+              "PerBatchTimeWeighted"
+            ],
+            "description": "How PID output maps to campaign rate. Total: direct rate. PerBatch: multiplied by active batch count. PerBatchTimeWeighted: multiplied by time-weighted batch count."
+          }
+        }
+      },
+      "ValidationProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "JWT Authorization header using the Bearer scheme",
+        "scheme": "bearer",
+        "bearerFormat": "Json Web Token"
+      },
+      "OpenIdConnect": {
+        "type": "openIdConnect",
+        "description": "OpenId Connect connection flow",
+        "openIdConnectUrl": "https://auth.rabbitdata.ch/.well-known/openid-configuration"
+      },
+      "OAuth2": {
+        "type": "oauth2",
+        "description": "OAuth2 authorization header using the Bearer scheme",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://auth.rabbitdata.ch/connect/authorize",
+            "tokenUrl": "https://auth.rabbitdata.ch/connect/token",
+            "refreshUrl": "https://auth.rabbitdata.ch/connect/token",
+            "scopes": {
+              "openid": "OpenID",
+              "profile": "Profile",
+              "email": "Email"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [],
+      "OpenIdConnect": [
+        "openid",
+        "profile",
+        "email"
+      ],
+      "OAuth2": [
+        "openid",
+        "profile",
+        "email"
+      ]
+    }
+  ]
+}

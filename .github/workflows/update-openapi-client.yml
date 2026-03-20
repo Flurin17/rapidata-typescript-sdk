@@ -1,0 +1,60 @@
+name: Update OpenAPI Client
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Schema environment to pull from
+        required: true
+        default: prod
+        type: choice
+        options:
+          - prod
+          - local
+  repository_dispatch:
+    types:
+      - update-openapi-client
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    env:
+      SCHEMA_ENVIRONMENT: ${{ github.event.client_payload.environment || inputs.environment || 'prod' }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 25.8.1
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Regenerate merged schemas and client
+        run: |
+          npm run generate:schemas -- --environment "$SCHEMA_ENVIRONMENT"
+          npm run generate:client
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.OPENAPI_UPDATE_PAT }}
+          branch: automation/openapi-client-update
+          delete-branch: true
+          commit-message: "chore: update generated OpenAPI client"
+          title: "chore: update generated OpenAPI client"
+          body: |
+            Regenerated the merged OpenAPI schemas and TypeScript client.
+
+            Source environment: `${{ env.SCHEMA_ENVIRONMENT }}`
+          add-paths: |
+            openapi/schemas/**
+            src/generated/**

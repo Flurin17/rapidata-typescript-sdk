@@ -1,0 +1,73 @@
+{
+  "name": "@flurin17/rapidata-typescript-sdk",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for Rapidata",
+  "license": "Apache-2.0",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flurinlaim/rapidata-typescript-sdk.git"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./generated": {
+      "types": "./dist/generated/index.d.ts",
+      "import": "./dist/generated/index.js",
+      "require": "./dist/generated/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "engines": {
+    "node": ">=25"
+  },
+  "volta": {
+    "node": "25.8.1",
+    "npm": "11.11.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest",
+    "sync:version": "tsx scripts/sync-version.ts",
+    "generate:schemas": "tsx scripts/fetch-schemas.ts",
+    "generate:client": "tsx scripts/generate-client.ts",
+    "generate": "npm run generate:schemas && npm run generate:client",
+    "check:generated": "npm run generate && git diff --exit-code -- openapi src/generated",
+    "verify": "npm run lint && npm run typecheck && npm run test -- --run && npm run build"
+  },
+  "dependencies": {
+    "@opentelemetry/api": "1.9.0",
+    "open": "10.2.0",
+    "undici": "7.16.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.23.0",
+    "@types/node": "22.15.21",
+    "@vitest/coverage-v8": "3.2.4",
+    "eslint": "9.23.0",
+    "globals": "15.15.0",
+    "openapi-typescript-codegen": "^0.29.0",
+    "tsup": "8.4.0",
+    "tsx": "4.20.3",
+    "typescript": "5.8.3",
+    "typescript-eslint": "8.29.1",
+    "vitest": "3.2.4"
+  }
+}
