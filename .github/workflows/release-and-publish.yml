@@ -1,6 +1,9 @@
 name: Release And Publish
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       version_bump:
@@ -16,8 +19,13 @@ permissions:
   contents: write
   id-token: write
 
+concurrency:
+  group: release-main
+  cancel-in-progress: false
+
 jobs:
   release:
+    if: github.event_name != 'push' || github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
 
     steps:
@@ -47,8 +55,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Determine version bump
+        id: bump
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "value=minor" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=${{ inputs.version_bump }}" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Bump package version
-        run: npm version "${{ inputs.version_bump }}" --no-git-tag-version
+        run: npm version "${{ steps.bump.outputs.value }}" --no-git-tag-version
 
       - name: Sync runtime version constant
         run: npm run sync:version
@@ -58,7 +75,9 @@ jobs:
 
       - name: Read version
         id: version
-        run: echo "value=$(node -p \"require('./package.json').version\")" >> "$GITHUB_OUTPUT"
+        run: |
+          VERSION=$(node -e "console.log(JSON.parse(require('node:fs').readFileSync('package.json', 'utf8')).version)")
+          echo "value=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Commit release artifacts
         run: |
