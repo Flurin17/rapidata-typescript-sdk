@@ -1,6 +1,6 @@
 {
   "name": "@flurin17/rapidata-typescript-sdk",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "TypeScript SDK for Rapidata",
   "license": "Apache-2.0",
   "type": "module",
