@@ -1133,6 +1133,38 @@ export class RapidataOrder extends BaseEntity {
     }
   }
 
+  /**
+   * Get current progress without blocking.
+   * Returns completion percentage, completed/total counts, and workflow state.
+   */
+  async getProgress() {
+    await this.context.ready;
+    const status = await this.getStatus();
+    const progress = await this.getWorkflowProgress();
+    return {
+      status,
+      completionPercentage: progress?.completionPercentage ?? 0,
+      completed: progress?.completed ?? 0,
+      total: progress?.total ?? 0,
+      state: progress?.state ?? "Unknown",
+      isComplete: ["Completed", "Paused", "ManualReview", "Failed"].includes(status),
+    };
+  }
+
+  /**
+   * Get intermediate/preliminary results without blocking.
+   * Returns current results even if the order is still in progress.
+   * Returns null if no results are available yet.
+   */
+  async getIntermediateResults(): Promise<RapidataResults | null> {
+    await this.context.ready;
+    try {
+      return await this.getPreliminaryResults();
+    } catch {
+      return null;
+    }
+  }
+
   async getResults(preliminaryResults = false) {
     await this.context.ready;
     const status = await this.getStatus();
@@ -1193,7 +1225,7 @@ export class RapidataOrder extends BaseEntity {
     throw new RapidataError(`Preliminary results for order ${this.id} are not available yet.`);
   }
 
-  private async getWorkflowProgress() {
+  async getWorkflowProgress() {
     const { workflowId } = await this.loadPipelineArtifactIds();
     if (!workflowId) {
       return undefined;
